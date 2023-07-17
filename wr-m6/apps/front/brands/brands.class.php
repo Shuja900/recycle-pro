@@ -33,7 +33,7 @@ function ShowALlBrands(){
 			<article class="hoproduct">
 				<div class="hoproduct-image">
 					<a class="hoproduct-thumb" href="products.php?b=<?php echo $arr['url']; ?>&bid=<?php echo $arr['id']; ?>&pc=<?php echo $arr['procat']; ?>">
-						<img class="hoproduct-frontimage" src="<?php echo BASE_FILRDIR.$arr['brand_logo']; ?>" alt="<?php echo $arr['brand_name']; ?>">
+						<img class="hoproduct-frontimage" src="<?php echo BASE_FILRDIR.$arr['brand_logo']; ?>" alt="Sell <?php echo $arr['brand_name']; ?>">
 					</a>
 				</div>
 				<div class="hoproduct-content text-center">

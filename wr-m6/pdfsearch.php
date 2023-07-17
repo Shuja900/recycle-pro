@@ -1,15 +1,19 @@
 <?php
 include('Db.php');
 $pid=$_POST['track'];
-$sqlyr = "select * from pdflabel where pdf like '%$pid%'";
+$sqlyr = "select * from pdflabel where pdf like '%$pid%' OR code LIKE '%$pid%'";
             $recordyr = mysqli_query($con,$sqlyr);
              while($year=mysqli_fetch_array($recordyr))
              {
                  $id=$year['label'];
              }
-            
            
+     if(empty($id)){
+         $sql = "select * from wr_order where id='$pid' ";
+     }
+     else{
         $sql = "select * from wr_order where label='$id' ";
+     }
  $recordyrs = mysqli_query($con,$sql);
 									 $row=mysqli_fetch_array($recordyrs);
              
@@ -22,7 +26,7 @@ $sqlyr = "select * from pdflabel where pdf like '%$pid%'";
             	<td>
 											<strong>Order Id: </strong> '.$row['id'].'</br>
 										<strong>Total Price: </strong>'.$row['total'].' </br>
-										
+										<strong>Revised Price: </strong>'.$row['revs'].' </br>
 												
 										</td>
                                        

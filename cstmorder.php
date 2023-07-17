@@ -14,15 +14,21 @@ $srt=$_POST['srt'];
 $pyl=$_POST['pyl'];
 $chk=mysqli_query($con,"select id from wr_order order by id DESC Limit 1");
 $row=mysqli_fetch_assoc($chk);
+$chk3=mysqli_query($con,"select id from wr_user order by id DESC Limit 1");
+$row3=mysqli_fetch_assoc($chk3);
 $oid=$row['id']+1;
- 
-$sql=mysqli_query($con,"INSERT INTO wr_order(total,order_status,g_total) VALUES('$price','Placed','$price')");
-if($sql)
-$sqt=mysqli_query($con,"INSERT INTO wr_order_detail(order_id,p_condition,qty,price,product_name) VALUES('$oid','$condi','$qty','$price','$prdtname')");
-$sqz=mysqli_query($con,"INSERT INTO wr_order_address(order_id,address1,account_no,sort_code,paypal_email) VALUES('$oid','$address_line_1','$act','$srt','$pyl')");
+$uid=$row3['id']+1;
+echo $uid;
+exit;
+$squ=mysqli_query($con,"INSERT INTO wr_user(fname,email,phone) VALUES('$name','$email','$number')");
+
+$sql=mysqli_query($con,"INSERT INTO wr_order(user_id,total,order_status,g_total) VALUES('$uid','$price','Placed','$price')");
+
+$sqt=mysqli_query($con,"INSERT INTO wr_order_detail(order_id,user_id,p_condition,qty,price,product_name) VALUES('$oid','$uid','$condi','$qty','$price','$prdtname')");
+$sqz=mysqli_query($con,"INSERT INTO wr_order_address(order_id,user_id,address1,account_no,sort_code,paypal_email) VALUES('$oid','$uid','$address_line_1','$act','$srt','$pyl')");
 if($sql)
 {
-    $lbl=mysqli_query($con,"select * from label order by id ASC limit 1");
+  /*  $lbl=mysqli_query($con,"select * from label order by id ASC limit 1");
 $rowlabel=mysqli_fetch_assoc($lbl);
 $label=$rowlabel['label'];
 $lblid=$rowlabel['id'];
@@ -30,7 +36,7 @@ $lblid=$rowlabel['id'];
 mysqli_query($con,"UPDATE wr_order SET label='$label' where id ='$oid'");
 $tto = array(
 $email,
-"sqb33@gmail.com");
+"noreply@recyclepro.co.uk");
 foreach($tto as $et) {
 $frm='noreply@recyclepro.co.uk';
 $nme='Recyclepro';
@@ -78,7 +84,7 @@ $msg .= '<div style="background-color: #efefef;color:#000000!important;font-size
 When inputting a weight, the weight can be maximum in that catagory depending on the size of the parcel you are sending in. If you are not sure just select the 2kg for watch, phone, laptop and gaming consoles and 5kg for Pc and imacs.</p>
 <p>All you then need to do is to provide your address from where you wish Royal Mail to collect your Parcel and choose a collection date that suits you before paying for your collection.</p>
   </div>
-  <div style="text-align:center;"><a href="https://www.recyclepro.co.uk/login.php"  class="ho-button">
+  <div style="text-align:center;"><a href="login.php"  class="ho-button">
                                         <span>Click Here To Get Label</span>
                                     </a></div>
           <p style="font-size:11px;text-align:center;">Please note: If you are sending multiple orders, please pack them separately and attach the relevant label to each box.
@@ -95,7 +101,7 @@ mail($et, $sub, $msg, $head);
 }
 $to = array(
 $email,
-"sqb33@gmail.com");
+"noreply@recyclepro.co.uk");
 foreach($to as $eto) {
 $names=$first_name;
 $from = 'noreply@recyclepro.co.uk'; 
@@ -115,7 +121,7 @@ $semi_rand = md5(time());
     
      for($i=0;$i<count($files);$i++){ 
     $file_name = basename($files[$i]); 
-                $targetDir = "https://www.recyclepro.co.uk/uploads/";
+                $targetDir = "uploads/";
                 $targetFilePath = $targetDir . $file_name;
                 $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
                 $uploadedFile = $targetFilePath;
@@ -136,9 +142,9 @@ $semi_rand = md5(time());
     
     $mail = @mail($eto, $subject, $message, $headers, $returnpath); 
     }
-    mysqli_query($con,"delete from label where id='".$lblid."' ");
+    mysqli_query($con,"delete from label where id='".$lblid."' ");*/
 $message = '<div class="alert alert-success">Your Data Has Been Enter successfully </div>';
-        header("location:https://www.recyclepro.co.uk/wr-m6/customorder.php?success=true&message='.$message");
+        header("location:wr-m6/customorder.php?success=true&message='.$message");
     }
     else
     {

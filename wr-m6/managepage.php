@@ -119,6 +119,25 @@ extract($_REQUEST);
          </div>
       </div>
       <!-- jQuery -->
+      <script>
+ $(document).ready(function(){
+$('#q_answer1').click(function(){
+    var track = $("#track").val(); 
+    $.ajax({
+        url:"searchproducts.php",
+        method: "POST",
+        data: {track:track},
+        success: function(data){
+            console.log(data);
+      $("#responsecontainer").html(data);
+      $('#pdfmodel').modal('show');
+        }
+    });
+});
+});
+
+
+</script>
       <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
       <!-- Bootstrap -->
       <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>

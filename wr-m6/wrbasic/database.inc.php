@@ -93,7 +93,7 @@
 		
 		public function fetch_query($query, $dbh='', $params = null, $fetchmode = PDO::FETCH_ASSOC)
 		{
-			$stmt = $dbh->prepare($sql);
+			$stmt = $dbh->prepare($query);
 			$query = trim($query);
 
 			$this->Init($query,$params,$dbh);
@@ -119,7 +119,7 @@
 			if( $arry!=null ){
 				if($result = $stmt->execute($arry)){
 					$row = $stmt->fetch();
-					if(count($row)-1>0)
+					if(($row)-1>0)
 						foreach($row as $key=>$value)
 							$row[$key]=stripslashes($value);
 					return $row;
@@ -127,7 +127,7 @@
 			}else{
 				if($result = $stmt->execute()){
 					$row = $stmt->fetch();
-					if(count($row)-1>0)
+					if(($row)-1>0)
 						foreach($row as $key=>$value)
 							$row[$key]=stripslashes($value);
 					return $row;

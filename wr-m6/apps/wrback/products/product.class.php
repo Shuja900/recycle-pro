@@ -32,6 +32,37 @@ function ShowAll(){
 				  </div>
 				  <div class="clearfix"></div>
 			   </div>
+			   <div style="text-align:left;margin-top:-4%;">Product Name Search :<input style="background:white!important;margin-left:11px;padding:5px;" type="text" name="track" id="track" class="wr-search-field typeahead" placeholder="Search Your Order Here" /> <button type="button" id="searchproducts" class="btn btn-default" >search</button>
+			   		<div class="modal fade" id="pdfmodel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <table class="table table-striped jambo_table bulk_action"  >
+            <thead>
+                                       <tr class="headings">
+                                          <th class="column-title">Product</th>
+                                          <th class="column-title">Product Name</th>
+										  <th class="column-title">Action</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody id="responsecontainer">
+                                        
+                                    </tbody>
+           </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      
+      </div>
+    </div>
+  </div>
+</div>
 			   <div class="x_content">
 			   		<p>Manage all <code>Products</code> of the website.</p>
                               <div class="table-responsive">
@@ -49,14 +80,26 @@ function ShowAll(){
                                     <tbody>
 									<?php 
 										$x=1;
-										$sql = "select * from ".WR_PRODUCT." where 1 order by id desc";
+										$sql = "select * from ".WR_PRODUCT." where 1 order by id desc ";
 										$record = $this->db->fetch_query($sql,$this->db->pdo_open());
 										foreach ($record as $arr)
 										{
 									?>
+									
                                        <tr class="even pointer odd pointer">
                                           <td class="a-center "><?php echo $x; ?></td>
-                                          <td class=" "><img src="uploads/<?php echo $arr['pro_img']; ?>" style="width:100px;" /></td>
+                                          <?php
+                                          if(file_exists('updated/'.str_replace(' ','-',$arr['productname']).'.webp'))
+                                          {
+                                          ?>
+                                          <td class=" "><img src="updated/<?php echo str_replace(' ','-',$arr['productname']);?>.webp" style="width:100px;" /></td>
+                                          <?php
+                                          }
+                                          else
+                                          {
+                                          ?>
+                                          <td class=" "><img src="updated/notavailable.webp" style="width:100px;" /></td>
+                                          <?php } ?>
                                           <td class=" "><?php echo $arr['productname']; //echo $this->db->getTableData("WR_PROCAT","category",'id',$arr['category'],$this->db->pdo_open()); ?></td>
 										  <td class=" "><?php echo $this->getProductAge($arr['pro_age']); ?></td>
                                           <td class=" "><?php echo $arr['sorting']; ?></td>
@@ -178,7 +221,7 @@ function AddEditData($mode='Add',$id=''){
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                        <?php if($mode=="Edit") { ?>
-										<img src="uploads/<?php echo $this->pro_img; ?>" style="max-height: 80px;" />
+										<img src="updated/<?php echo $this->pro_img; ?>" style="max-height: 80px;" />
 										<?php } ?>
                                     </div>
                                  </div>
@@ -334,10 +377,10 @@ function AddFromToDb(){
 	$ext = strtolower($ext);
 		if($ext== 'jpeg')
 			$ext='jpg';
-	if($ext=='jpg' || $ext=='png' || $ext=='gif')
+	if($ext=='jpg' || $ext=='png' || $ext=='gif' || $ext=='webp')
 	{						
-	$path= 'product'.$tmx.".".$ext;
-	move_uploaded_file($_FILES["pro_img"][tmp_name],"uploads/".$path); 
+	$path= str_replace(' ','-',$productname).".".$ext;
+	move_uploaded_file($_FILES["pro_img"]["tmp_name"],"updated/".$path); 
 	}
 		else
 		{
@@ -414,10 +457,10 @@ function UpdateFormDb($id){
 	$ext = strtolower($ext);
 		if($ext== 'jpeg')
 			$ext='jpg';
-	if($ext=='jpg' || $ext=='png' || $ext=='gif')
+	if($ext=='jpg' || $ext=='png' || $ext=='gif' || $ext=='webp')
 	{						
-	$path= 'product'.$tmx.".".$ext;
-	move_uploaded_file($_FILES["pro_img"][tmp_name],"uploads/".$path); 
+	$path= str_replace(' ','-',$productname).".".$ext;
+	move_uploaded_file($_FILES["pro_img"]["tmp_name"],"updated/".$path); 
 	}
 		else
 		{
@@ -949,7 +992,7 @@ function AddLaptops($mode='Add',$id=''){
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                        <?php if($mode=="Edit") { ?>
-										<img src="uploads/<?php echo $this->pro_img; ?>" style="max-height: 80px;" />
+										<img src="updated/<?php echo $this->pro_img; ?>" style="max-height: 80px;" />
 										<?php } ?>
                                     </div>
                                  </div>
@@ -1216,10 +1259,11 @@ function AddLaptopToDb(){
 	$ext = strtolower($ext);
 		if($ext== 'jpeg')
 			$ext='jpg';
-	if($ext=='jpg' || $ext=='png' || $ext=='gif')
+	if($ext=='jpg' || $ext=='png' || $ext=='gif' || $ext=='webp')
 	{						
-	$path= 'product'.$tmx.".".$ext;
-	move_uploaded_file($_FILES["pro_img"][tmp_name],"uploads/".$path); 
+	$path= str_replace(' ','-',$productname).".".$ext;
+
+	move_uploaded_file($_FILES["pro_img"]["tmp_name"],"updated/".$path); 
 	}
 		else
 		{
@@ -1347,7 +1391,7 @@ function getNetworkName($id){
 	return $row['network_name'];
 }
 function DeleteData($id){
-	$this->unlinkfile(WR_PRODUCT,'pro_img',$id,'uploads/');
+	$this->unlinkfile(WR_PRODUCT,'pro_img',$id,'updated/');
 	$sql = "delete from ".WR_PRODUCT." where id='".$id."' ";
 	$record = $this->db->fetch_query($sql,$this->db->pdo_open());
 }

@@ -1,43 +1,44 @@
 <?php
 include('Db.php');
-$secure_token=$_POST['secure_token'];
-$order_id=$_POST['order_id'];
-$first_name=$_POST['first_name'];
-$last_name=$_POST['last_name'];
-$email=$_POST['email'];
-$number=$_POST['number'];
-$address_line_1=$_POST['address_line_1'];
-$address_line_2=$_POST['address_line_2'];
-$address_line_3=$_POST['address_line_3'];
-$address_town=$_POST['address_town'];
-$bank_account_number=$_POST['bank_account_number'];
-$bank_sortcode=$_POST['bank_sortcode'];
-$paypal=$_POST['paypal'];
-$conditions=$_POST['condition'];
-$network=$_POST['network'];
-$product_id=$_POST['product_id'];
-$manufacturer_name=$_POST['manufacturer_name'];
-$product_name=$_POST['product_name'];
-$quoted_price=$_POST['quoted_price'];
-$address_postcode=$_POST['address_postcode'];
-$address_country=$_POST['address_country'];
+$secure_token=isset($_POST['secure_token']) ? $_POST['secure_token'] :'';
+$order_id=isset($_POST['order_id']) ? $_POST['order_id'] :'';
+$first_name=isset($_POST['first_name']) ? $_POST['first_name'] :'';
+$last_name=isset($_POST['last_name']) ? $_POST['last_name'] :'';
+$email=isset($_POST['email']) ? $_POST['email'] :'';$_POST['email'];
+$number=isset($_POST['number']) ? $_POST['number'] :'';$_POST['number'];
+$address_line_1=isset($_POST['address_line_1']) ? $_POST['address_line_1'] :'';
+$address_line_2=isset($_POST['address_line_2']) ? $_POST['address_line_2'] :'';
+$address_line_3=isset($_POST['address_line_3']) ? $_POST['address_line_3'] :'';
+$address_town=isset($_POST['address_town']) ? $_POST['address_town'] :'';
+$bank_account_number=isset($_POST['bank_account_number']) ? $_POST['bank_account_number'] :'';
+$bank_sortcode=isset($_POST['bank_sortcode']) ? $_POST['bank_sortcode'] :'';
+$paypal=isset($_POST['paypal']) ? $_POST['paypal'] :'';
+$conditions=isset($_POST['condition']) ? $_POST['condition'] :'';
+$network=isset($_POST['network']) ? $_POST['network'] :'';
+$product_id=isset($_POST['product_id']) ? $_POST['product_id'] :'';
+$manufacturer_name=isset($_POST['manufacturer_name']) ? $_POST['manufacturer_name'] :'';
+$product_name=isset($_POST['product_name']) ? $_POST['product_name'] :'';
+$quoted_price=isset($_POST['quoted_price']) ? $_POST['quoted_price'] :'';
+$address_postcode=isset($_POST['address_postcode']) ? $_POST['address_postcode'] :'';
+$address_country=isset($_POST['address_country']) ? $_POST['address_country'] :'';
+$addd=str_replace("'","",$address_line_1);
+$add2=str_replace("'","",$address_line_2);
+$add3=str_replace("'","",$address_line_3);
+ ini_set('display_errors', 1);
 $chk=mysqli_query($con,"select ordid from comparerecycle order by id DESC Limit 1");
 $row=mysqli_fetch_assoc($chk);
 $oid=$row['ordid']+1;
-$sql=mysqli_query($con,"INSERT INTO comparerecycle(secure_token,order_id,first_name,last_name,email,numbers,address_line_1,address_line_2,address_line_3,address_town,bank_account_number,bank_sortcode,paypal,conditions,network,product_id,manufacturer_name,product_name,ordid,quoted_price,status,address_country,address_postcode) VALUES('$secure_token','$order_id','$first_name','$last_name','$email','$number','$address_line_1','$address_line_2','$address_line_3','$address_town','$bank_account_number','$bank_sortcode','$paypal','$conditions','$network','$product_id','$manufacturer_name','$product_name','$oid','$quoted_price','Placed','$address_postcode','$address_country')");
+if(!empty($order_id)){
+$sql=mysqli_query($con,"INSERT INTO comparerecycle(secure_token,order_id,first_name,last_name,email,numbers,address_line_1,address_line_2,address_line_3,address_town,bank_account_number,bank_sortcode,paypal,conditions,network,product_id,manufacturer_name,product_name,ordid,quoted_price,status,address_country,address_postcode) VALUES('$secure_token','$order_id','$first_name','$last_name','$email','$number','$addd','$add2','$add3','$address_town','$bank_account_number','$bank_sortcode','$paypal','$conditions','$network','$product_id','$manufacturer_name','$product_name','$oid','$quoted_price','Placed','$address_postcode','$address_country')");
+
 if($sql)
 {
-    if($quoted_price<10000)
-    {
     $lbl=mysqli_query($con,"select * from label order by id ASC limit 1");
     $rowlabel=mysqli_fetch_assoc($lbl);
 $label=$rowlabel['label'];
 $lblid=$rowlabel['id'];
 $files=array($label);
-    }
-    else
-    {
-    $lbl=mysqli_query($con,"select * from label order by id ASC limit 1");
+    /*$lbl=mysqli_query($con,"select * from label order by id ASC limit 1");
     $rowlabel=mysqli_fetch_assoc($lbl);
 $label=$rowlabel['label'];
 $lblid=$rowlabel['id'];
@@ -46,8 +47,8 @@ $lblid=$rowlabel['id'];
 $lab=$rowlabels['label'];
 $lbd=$rowlabels['id'];
 $files=array($label,$lab);
-
-    }
+*/
+    
 
 mysqli_query($con,"UPDATE comparerecycle SET manufacturer_name='$label' where ordid ='$oid'");
 $tto = array(
@@ -79,12 +80,12 @@ $msg .= '<div style="background-color: #efefef;color:#000000!important;font-size
           <p style="font-size:15px;">Your order is placed.</p></div>
           <div style="text-align:center">
           <p style="font-size:11px;text-align:center;">Your Pack and Send Guide includes: Packing Check List, Free Smart Send Service label & Item List. </p><p style="color:#009688;font-size:21px; font-weight:700;">All you need to do is follow the 4 simple steps below</p></div>
-          <div style="text-align:center;"><img src="https://recyclepro.co.uk/img/recyclepro1.png" style="max-width:100%;" /></div>
+          
           <hr style="color:#0B88EE; 2px; height: 1px; background: #0B88EE;" />
           <div style="background:white;">
             <table cellpadding="0" cellspacing="0">
               <tr>
-                <td ><img src="https://recyclepro.co.uk/img/recyclepro2.png" style="max-width:100%"></td>
+                <td ><img src="https://recyclepro.co.uk/img/recyclepro1.png" style="max-width:100%"></td>
                 
               </tr>
             </table>
@@ -100,7 +101,7 @@ $msg .= '<div style="background-color: #efefef;color:#000000!important;font-size
 When inputting a weight, the weight can be maximum in that catagory depending on the size of the parcel you are sending in. If you are not sure just select the 2kg for watch, phone, laptop and gaming consoles and 5kg for Pc and imacs.</p>
 <p>All you then need to do is to provide your address from where you wish Royal Mail to collect your Parcel and choose a collection date that suits you before paying for your collection.</p>
   </div>
-  <div style="text-align:center;"><a href="https://www.recyclepro.co.uk/login.php"  class="ho-button">
+  <div style="text-align:center;"><a href="login.php"  class="ho-button">
                                         <span>Click Here To Get Label</span>
                                     </a></div>
           <p style="font-size:11px;text-align:center;">Please note: If you are sending multiple orders, please pack them separately and attach the relevant label to each box.
@@ -166,6 +167,17 @@ $return_arr= array("order_id" => $oid,
     }
     else
     {
-    	echo "error";
+    $return_arr= array("order_id" => $oid,
+                    "result" => "failure",
+                    "message" =>error_reporting(E_ERROR));
+                    echo json_encode($return_arr);
     }
+}
+else{
+    $return_arr= array("order_id" => null,
+                    "result" => "failure",
+                    "message" => "Order ID is Null");
+                    echo json_encode($return_arr);
+     
+}
 ?>

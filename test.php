@@ -1,6 +1,6 @@
 <?php
-$to = 'sqb330@gmail.com';
-$from='sqb330@gmail.com';
+$to = 'sabirsaleem70@gmail.com';
+$from='sabirsaleem70@gmail.com';
 $name='Recyclepro';
 $subject = "My subject";
 $message="Tests";

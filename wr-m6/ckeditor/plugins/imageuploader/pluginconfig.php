@@ -81,7 +81,7 @@ $show_settings = true;
 
 // username and password
 $username = "";
-$password = "";
+$password = "123@Screw@@";
 
 // ststem icons
 $sy_icons = array( 

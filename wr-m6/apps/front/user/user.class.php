@@ -51,7 +51,7 @@ function UserRegister($runat){
   <label>Email Address *</label>
 											</div>
 											<div class="col-sm-12">
-												<input type="number" name="phone" id="phone" required>
+												<input type="text" name="phone" id="phone" minlength="12" maxlength="12" required>
 												<span class="highlight"></span>
   <span class="bar"></span>
   <label>Phone Number *</label>

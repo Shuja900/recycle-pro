@@ -55,7 +55,7 @@ $countfiles = count($_FILES['image']['name']);
     // Return true, if email sent, otherwise return false 
     if($mail){ 
          $message = '<div class="alert alert-success">Email has been sent successfully </div>';
-         header("location: https://www.recyclepro.co.uk/wr-m6/manageorders.php?index=view&id=$oid&message='.$message");
+         header("location: wr-m6/manageorders.php?index=view&id=$oid&message='.$message");
     }else{ 
         return false; 
     } 

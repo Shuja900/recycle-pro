@@ -28,7 +28,7 @@ $pagename='contact';
     <!-- Plugins -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/plugins.css">
-<link rel="canonical" href="https://www.recyclepro.co.uk/contact.php"/>
+<link rel="canonical" href="contact.php"/>
     <!-- Style Css -->
     <link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" href="css/css-utilities-technovibes.css">

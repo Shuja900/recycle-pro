@@ -7,7 +7,7 @@ $blog_obj = new BlogClass();
 extract($_REQUEST);
 ?>
 <!doctype html>
-<html class="no-js" lang="zxx">
+<html class="no-js" lang="en-gb">
 <style>
     .blogitem2-image {
     height: 194px;

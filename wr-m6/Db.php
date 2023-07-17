@@ -1,4 +1,4 @@
 <?php
 //connect to mysql database
-$con = mysqli_connect("localhost", "recyclepro_co_uk", "L3eEdkG4zYhce5DTfgewteW4", "recyclepro_co_uk") or die("Error " . mysqli_error($con));
+$con = mysqli_connect("localhost", "recycleproco_sohaib", "123@Screw@@", "recycleproco_experiment") or die("Error " . mysqli_error($con));
 ?>

@@ -11,8 +11,10 @@ $year=$_POST['year'];
             while($year=mysqli_fetch_array($recordyr))
             {
             	?>
+            	
             	<option  value='<?php echo $year['processor']; ?>'><?php echo $year['processor']; ?></option>
-<?php
+
+            	<?php
             }
             ?>
            

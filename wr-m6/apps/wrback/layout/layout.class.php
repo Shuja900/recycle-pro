@@ -49,8 +49,15 @@ function LeftNav($page,$subpage=''){
                            <li>
                               <a href="home.php"><i class="fa fa-home"></i> Dashboard</a>
                            </li>
+                           <li>
+                              <a href="searchengine.php"><i class="fa fa-home"></i>Search Orders</a>
+                           </li>
+                           <li>
+                              <a href="pending_payment.php"><i class="fa fa-home"></i>Pending Orders</a>
+                           </li>
 						   <li><a href="manageorders.php"><i class="fa fa-user"></i> Manage Orders</a></li>
 						   <li><a href="mngorder.php"><i class="fa fa-user"></i> Compare And Recycle Orders</a></li>
+						   <li><a href="mngselorder.php"><i class="fa fa-user"></i> Sell My Phones Orders</a></li>
 						   <li><a href="manageusers.php"><i class="fa fa-user"></i> Manage User</a></li>
 						   <li>
                               <a><i class="fa fa-shopping-cart"></i> Products <span class="fa fa-chevron-down"></span></a>
@@ -92,11 +99,12 @@ function LeftNav($page,$subpage=''){
                            </li>
 						   <li><a href="manageorders.php"><i class="fa fa-user"></i> Manage Orders</a></li>
 						    <li><a href="mngorder.php"><i class="fa fa-user"></i> Compare And Recycle Orders</a></li>
+						    <li><a href="mngselorder.php"><i class="fa fa-user"></i> Sell My Phones Orders</a></li>
 						   <li>
-                              <a href="https://www.recyclepro.co.uk/wr-m6/label.php"><i class="fa fa-globe"></i>Shipping Label</a>
+                              <a href="wr-m6/label.php"><i class="fa fa-globe"></i>Shipping Label</a>
                            </li>
                             <li>
-                              <a href="https://www.recyclepro.co.uk/wr-m6/show_label.php"><i class="fa fa-globe"></i>View Label </a>
+                              <a href="wr-m6/show_label.php"><i class="fa fa-globe"></i>View Label </a>
                            </li>
 						   
                         </ul>
@@ -139,10 +147,10 @@ function LeftNav($page,$subpage=''){
                               </ul>
                            </li>
                            <li>
-                              <a href="https://www.recyclepro.co.uk/wr-m6/label.php"><i class="fa fa-globe"></i>Shipping Label</a>
+                              <a href="wr-m6/label.php"><i class="fa fa-globe"></i>Shipping Label</a>
                            </li>
                             <li>
-                              <a href="https://www.recyclepro.co.uk/wr-m6/show_label.php"><i class="fa fa-globe"></i>View Label </a>
+                              <a href="wr-m6/show_label.php"><i class="fa fa-globe"></i>View Label </a>
                            </li>
                            <li><a href="#"><i class="fa fa-laptop"></i> Go to Website</a></li>
                            <li><a href="followup.php"><i class="fa fa-envelope"></i> Follow-up Emails </a></li>

@@ -12,12 +12,12 @@ $fltmp= $_FILES['image']['tmp_name'];
 if($sql)
 {
     $message = '<div class="alert alert-success">Your Data Has Been Enter successfully </div>';
-header("location:https://www.recyclepro.co.uk/wr-m6/mngorder.php?success=true&message='.$message");
+header("location:wr-m6/mngorder.php?success=true&message='.$message");
     }
     else
     {
     $message = '<div class="alert alert-danger">There Is Some Error  </div>';
-header("location:https://www.recyclepro.co.uk/wr-m6/mngorder.php?success=false&message='.$message");
+header("location:wr-m6/mngorder.php?success=false&message='.$message");
     }
 
 ?>

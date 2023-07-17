@@ -36,14 +36,14 @@ function ContactPage(){
                                         <i class="lnr lnr-phone-handset"></i>
                                     </span>
                                     <b>Call us:</b><br>
-                                    <a href="tel:+44121382-2532">+44 (121) 382-2532</a>
+                                    <a href="tel:+4401216303773">+4401216303773</a>
                                 </div>
                                 <div class="single-content">
                                     <span class="single-content-icon">
                                         <i class="lnr lnr-envelope"></i>
                                     </span>
                                     <b>Email us:</b><br>
-                                    <a href="mailto:info@m6repairs.co.uk">info@m6repairs.co.uk</a>
+                                    <a href="mailto:info@recyclepro.co.uk">info@recyclepro.co.uk</a>
                                 </div>
                             </div>
                         </div>

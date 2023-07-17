@@ -2,7 +2,7 @@
     header("Content-Type: application/xml; charset=utf-8"); 
     echo '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL; 
     echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">' .PHP_EOL; 
-$con = mysqli_connect("localhost", "recyclepro_co_uk", "L3eEdkG4zYhce5DTfgewteW4", "recyclepro_co_uk") or die("Error " . mysqli_error($con));
+$con = mysqli_connect("localhost", "root", "", "recyclepro_co_uk") or die("Error " . mysqli_error($con));
 $sql="select * from url";
 $date= date("Y-m-d").'T'. date("H:i:s").'+00:00';
 $result=mysqli_query($con,$sql);

@@ -7,7 +7,7 @@ $blog_obj = new BlogClass();
 extract($_REQUEST);
 ?>
 <!doctype html>
-<html class="no-js" lang="zxx">
+<html class="no-js" lang="en-gb">
 
 <head>
     <meta charset="utf-8">
@@ -33,7 +33,7 @@ extract($_REQUEST);
     <link rel="stylesheet" href="css/custom.css">
 	<script src="js/page.js"></script>
 	<?php echo $layout_obj->getBasicVals('Header_codes','option_value'); ?>
-	<link rel="canonical" href="https://www.recyclepro.co.uk/blog-detail.php?h=<?php echo $_GET['h'];?>&b=<?php echo $_GET['b'];?>">
+	<link rel="canonical" href="blog-detail.php?h=<?php echo $_GET['h'];?>&b=<?php echo $_GET['b'];?>">
 </head>
 
 <body>

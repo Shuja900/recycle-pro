@@ -7,7 +7,7 @@ $pro_obj = new FrontProductClass();
 extract($_REQUEST);
 ?>
 <!doctype html>
-<html class="no-js" lang="zxx">
+<html class="no-js" lang="en-gb">
 
 <head>
     <meta charset="utf-8">
@@ -66,7 +66,7 @@ extract($_REQUEST);
   <hr>
   
   <p class="lead">
-    <a class="btn btn-primary btn-sm" href="https://www.recyclepro.co.uk/" role="button">Continue to homepage</a>
+    <a class="btn btn-primary btn-sm" href="" role="button">Continue to homepage</a>
   </p>
 </div>
         </main>

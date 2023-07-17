@@ -16,7 +16,7 @@ extract($_REQUEST);
 <head>
       <?php $layout_obj->pageTitle('Manage Order | Wr-Admin'); ?>
       <!-- Bootstrap -->
-      <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+     <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
       <!-- Font Awesome -->
       <link href="assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
       <!-- NProgress -->
@@ -28,8 +28,7 @@ extract($_REQUEST);
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
       <script src="ckeditor/ckeditor.js"></script>
       <link rel="stylesheet" href="ckeditor/toolbarconfigurator/lib/codemirror/neo.css">
-     
-   </head>
+    </head>
    <body class="nav-md dark-left-side">
       <?php //$layout_obj->PreLoader(); ?>
       <div class="container body">
@@ -93,7 +92,7 @@ $('#q_answer1').click(function(){
         success: function(data){
             console.log(data);
       $("#responsecontainer").html(data);
-      $('#exampleModal').modal('show');
+      $('#pdfmodel').modal('show');
         }
     });
 });
@@ -101,7 +100,10 @@ $('#q_answer1').click(function(){
 
 
 </script>
-      <!-- jQuery -->
+
+
+
+     <!-- jQuery -->
       <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
       <!-- Bootstrap -->
       <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -117,5 +119,5 @@ $('#q_answer1').click(function(){
       <!-- Custom Theme Scripts -->
       <script src="assets/js/custom.min.js"></script>
       <?php $order_obj->PageJSCall(); ?>
-   </body>
+      </body>
 </html>

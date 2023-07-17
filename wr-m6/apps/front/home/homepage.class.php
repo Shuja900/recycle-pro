@@ -66,8 +66,8 @@ $record = $this->db->row($sql,$this->db->pdo_open());
 			 <h2 style="font-size:22px;"><?php echo $row['heading']; ?></h2>
 			 <p style="font-size:11px!important;margin-top:4%;"><?php echo $row['content']; ?></p>
 			 <div style="display:flex;">
-			 <h2 style="margin-top: 15px; margin-bottom: 0px; font-size: 60px; color: #17a697;"><?php echo $row['title']; ?></h2>
-			 <img style="text-align:center;padding-left:30%;" src="<?php echo 'uploads/'.$row['keywords']; ?>" alt="<?php echo $row['keywords'];?>">
+			 <h2 style="margin-top: 15px; margin-bottom: 0px; font-size: 60px; color: #13564f;"><?php echo $row['title']; ?></h2>
+			 <img height="100%" width="100%" style="text-align:center;padding-left:30%;" src="<?php echo 'uploads/'.$row['keywords']; ?>" alt="<?php echo $row['keywords'];?>">
 			 </div>
 			 </div>
 			</div>
@@ -307,7 +307,7 @@ function HomeSearch(){
 ?>
 <div class="row">
 	<div class="col-md-12">
-		<div style="padding: 25px; border: #17a697 3px solid; margin-top: 40px; background: #fff;">
+		<div style="padding: 25px; border: #13564f 3px solid; margin-top: 40px; background: #fff;">
 			<h2 style="margin-top:25px;">What do you want to sell?</h2>
 			
 			
@@ -374,8 +374,8 @@ function HomeSearch(){
 								<?php */?>
 								
 								<input type="text" name="mob-search-field" id="mob-search-field" class="wr-search-field typeahead" placeholder="Enter your item (Eg: Iphone 7)..." />
-								<ul class="divcontact dropdown-menu src" role="listbox" style="top: 141px; left: 15px;">
-									
+								<!--<ul class="divcontact dropdown-menu src" role="listbox" style="top: 141px; left: 15px;overflow-y: hidden;overflow-x: hidden;width:68%;">-->
+									<ul class="divcontact dropdown-menu src" role="listbox" style="left: 15px;overflow-y: hidden;overflow-x: hidden;width:68%;">
 								</ul>
 								<button name="mob-search-btn" class="wr-search-btn" type="button" disabled>Find Device</button>
 								
@@ -398,7 +398,7 @@ function HomeSearch(){
 }	
 
 function getSearchResult($keyword){
-$sql_mod = "select DISTINCT * from ".WR_PRODUCT." where productname like '%".$keyword."%' AND status='Show' Order By sorting ASC LIMIT 10";
+$sql_mod = "select DISTINCT * from ".WR_PRODUCT." where keywords like '%".$keyword."%' AND status='Show' Order By sorting ASC LIMIT 10";
 	$record_mod = $this->db->fetch_query($sql_mod,$this->db->pdo_open());
 	$countryResult=array();
 	if(count($record_mod)>0) {

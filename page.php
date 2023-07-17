@@ -1,4 +1,11 @@
-<?php 
+<?php
+$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+$url= $protocol .$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+if($url=="page.php?p=5&h=game-consoles-repair" || $url=="page.php?p=3&h=mobile-screen-repair" || $url=="page.php?p=4&h=tablet-ipad-repair")
+{
+  $yourURL="page.php?p=1&h=about-us";
+    header("location: $yourURL", true, 301);
+}
 require_once("wr-m6/wrbasic/config.inc.php");
 require_once('wr-m6/apps/front/layout/layout.class.php');
 require_once('wr-m6/apps/front/pages/pages.class.php');
@@ -6,11 +13,13 @@ $layout_obj = new LayoutClass();
 $page_obj = new PagesClass();
 extract($_REQUEST);
 
-if($p==1)
+if($p==1 || $p==5 || $p==8)
 $pagename='about';
+
+
 ?>
 <!doctype html>
-<html class="no-js" lang="zxx">
+<html class="no-js" lang="en-gb">
 
 <head>
     <meta charset="utf-8">
@@ -20,7 +29,7 @@ $pagename='about';
 	<meta name="keywords" content="<?php echo $page_obj->getPageData('keywords',$p); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<link rel="canonical" href="https://www.recyclepro.co.uk/page.php?p=1&h=about-us">
+<link rel="canonical" href="page.php?p=1&h=about-us">
     <!-- Favicon -->
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="images/icon.png">
@@ -77,12 +86,12 @@ $pagename='about';
             <!-- Shop Page Area -->
             <div class="blog-area ptb-30">
                 <div class="container">
-                    <img class="img-fluid" src="images/About_banner.jpg" alt="About_banner">
+                    <img class="img-fluid" src="images/About_banner.webp" alt="About_banner">
                    <section class="home-about-area section-gap">
                 <div class="container">
                     <div class="row align-items-center justify-content-between">
                         <div class="col-lg-6 col-md-6 home-about-left">
-                            <img class="img-fluid" src="images/2.png" alt="2">
+                            <img class="img-fluid" src="images/About_banner2.webp" alt="2">
                         </div>
                         <div class="col-lg-5 col-md-6 home-about-right">
                             <h6 style="font-size:23px;font-weight:600;color:#17a697;">About Us</h6>
@@ -98,7 +107,7 @@ $pagename='about';
                                We take the hassle out of having a clear out and make selling your stuff easy. It’s simple: get an instant price for your items, pop all of your stuff into a box and send it for FREE!
                             </p>
                             <p style="text-align:center;">
-                               You won’t have to wait to get paid either. If you choose to get paid by bank transfer or PayPal, we'll pay on the same day we receive your items and your cash will be ready to spend the day after! You can also get paid by cheque or donate your money to charity.                                
+                               If you choose to get paid by bank transfer or PayPal, we'll pay you with in 24 hours after we have received your items and your cash will be ready to spend the day after or you can donate your money to your favourite charity.                              
                             </p >
                             
                         </div>
@@ -107,7 +116,7 @@ $pagename='about';
                             <div class="row">
                             <div class="col-md-4">
                             <div class="single-services" >
-                                <img style="width:100px!important;height:100px!important;" class="img-fluid" src="images/price.jpg"  alt="price">
+                                <img style="width:100px!important;height:100px!important;" class="img-fluid" src="images/price.webp"  alt="price icon">
                                 <h4  style="font-size:23px;font-weight:600;color:#17a697;">PRICE</h4>
                                 <p>
                                     Get an instant price for your stuff
@@ -116,7 +125,7 @@ $pagename='about';
                         </div>
                         <div class="col-md-4">
                             <div class="single-services">
-                                <img style="width:100px!important;height:100px!important;" class="img-fluid" src="images/box.jpg" width="100px" height="100px" alt="box">
+                                <img style="width:100px!important;height:100px!important;" class="img-fluid" src="images/box.webp" width="100px" height="100px" alt="box icon">
                                 <h4  style="font-size:23px;font-weight:600;color:#17a697;">BOX</h4>
                                 <p>
                                     Put your stuff in a box (any box will do)
@@ -125,7 +134,7 @@ $pagename='about';
                         </div>
                         <div class="col-md-4">
                             <div class="single-services">
-                               <img style="width:100px!important;height:100px!important;" class="img-fluid" src="images/car.png" width="100px" height="100px" alt="car">
+                               <img style="width:100px!important;height:100px!important;" class="img-fluid" src="images/car.webp" width="100px" height="100px" alt="car icon">
                                <h4  style="font-size:23px;font-weight:600;color:#17a697;">SEND</h4>
                                 <p>
                                    Send your stuff for FREE
@@ -143,7 +152,7 @@ $pagename='about';
                             <div class="row">
                             <div class="col-md-3">
                             <div class="single-services">
-                                <img class="img-fluid" src="images/faceb.png"  alt=faceb"" width="100px" height="100px">
+                                <img class="img-fluid" src="images/facebook_logo.webp"  alt=facebook logo"" width="100px" height="100px">
                                 <h4  style="font-size:23px;font-weight:600;color:#17a697;">Facebook</h4>
                                 <p>
                                     Get in touch with Recyclepro through Facebook
@@ -153,7 +162,7 @@ $pagename='about';
                         </div>
                         <div class="col-md-3">
                             <div class="single-services">
-                               <img class="img-fluid" src="images/twite.png"  alt="twite" width="100px" height="100px">
+                               <img class="img-fluid" src="images/twitter_logo.webp"  alt="twitter logo" width="100px" height="100px">
                                 <h4  style="font-size:23px;font-weight:600;color:#17a697;">Twitter</h4>
                                 <p>
                                     Get in touch with Recyclepro through Twitter
@@ -164,7 +173,7 @@ $pagename='about';
                         </div>
                         <div class="col-md-3">
                             <div class="single-services">
-                                <img class="img-fluid" src="images/googl.png"  alt="googl" width="100px" height="100px">
+                                <img class="img-fluid" src="images/google_logo.webp"  alt="google logo" width="100px" height="100px">
                                <h4  style="font-size:23px;font-weight:600;color:#17a697;">Google</h4>
                                 <p>
                                     Get in touch with Recyclepro through Google
@@ -175,7 +184,7 @@ $pagename='about';
                         </div>
                         <div class="col-md-3">
                             <div class="single-services">
-                               <img class="img-fluid" src="images/insta.jpg"  alt="insta" width="100px" height="100px">
+                               <img class="img-fluid" src="images/insta_logo.webp"  alt="insta logo" width="100px" height="100px">
                                 <h4  style="font-size:23px;font-weight:600;color:#17a697;">Instagram</h4>
                                 <p>
                                     Get in touch with Recyclepro through Instagram

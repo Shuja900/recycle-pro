@@ -8,7 +8,7 @@ $pro_obj = new FrontProductClass();
 extract($_REQUEST);
 ?>
 <!doctype html>
-<html class="no-js" lang="zxx">
+<html class="no-js" lang="en-gb">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -115,6 +115,19 @@ $SCprice = $row_p['scrap_price'];
                         <div class="">
                             <div class="pdetails-singleimage border-blue-wr">
                                 <img src="wr-m6/uploads/<?php echo $pr_img; ?>" >
+                                <?php
+                                          if(file_exists('wr-m6/updated/'.str_replace(' ','-',$prname).'.webp'))
+                                          {
+                                          ?>
+							<img src="wr-m6/updated/<?php echo str_replace(' ','-',$prname); ?>.webp" alt="Sell <?php echo $prname; ?>">
+							<?php
+                                          }
+                                          else
+                                          {
+                                          ?>
+                                          <img class="hoproduct-frontimage text-center" src="wr-m6/updated/notavailable.webp" alt=" Sell <?php echo $prname; ?>">
+
+                                           <?php } ?>
                             </div>
                         </div>
                     </div>

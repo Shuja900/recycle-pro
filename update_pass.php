@@ -7,7 +7,7 @@ if(mysqli_num_rows($check)>0)
 {
 mysqli_query($con,"UPDATE wr_user SET password='$password' where email='$email'");
 $message = '<div class="alert alert-success">Your Password Has Been Updated successfully </div>';
-header("location:https://www.recyclepro.co.uk/login.php");
+header("location:login.php");
 }
 else
 {

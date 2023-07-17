@@ -1,5 +1,27 @@
-<?php 
+<?php
+if(isset($_GET['id']))
+{
 include('Db.php');
+$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+$url= $protocol .$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$sqy = "select brand from wr_product where id='".$_GET['id']."' ";
+$rec=mysqli_query($con,$sqy);
+$ros=mysqli_fetch_array($rec);
+$sqz = "select brand_name from wr_brands where id='".$ros['brand']."' ";
+$rez=mysqli_query($con,$sqz);
+$roz=mysqli_fetch_array($rez);
+$names=$roz['brand_name'];
+$urz=$url.'&name='.$names;
+$g=str_replace('&name='.$names.''.'&name='.$names,'&name='.$names,$urz);
+$uki="sell_laptop.php?id=".$_GET['id']."&pc=".$_GET['pc']."";
+if($url=="sell_laptop.php?id=".$_GET['id']."&pc=".$_GET['pc']."" || $url=="sell_laptop?id=".$_GET['id']."&pc=".$_GET['pc']."")
+{
+  $yourURL="sell_laptop.php?id=".$_GET['id']."&pc=".$_GET['pc']."&b=".$names."";
+    header("location: $yourURL", true, 301);
+}
+
+}
+
 require_once("wr-m6/wrbasic/config.inc.php");
 require_once('wr-m6/apps/front/layout/layout.class.php');
 require_once('wr-m6/apps/front/home/homepage.class.php');

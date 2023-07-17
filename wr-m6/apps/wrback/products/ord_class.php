@@ -17,7 +17,7 @@ function ShowAll(){
 			   <div class="x_content">
 			   		<p>Manage all <code>Orders</code> of the website.</p>
 			   		 Search :<input style="background:white!important;margin-left:11px;padding:5px;" type="text" name="mob-search-field" id="odr" class="wr-search-field typeahead" placeholder="Search Your Order Here" />
-			   		 	<div style="text-align:right;margin-top:-4%;">Tracking Id search :<input style="background:white!important;margin-left:11px;padding:5px;" type="text" name="track" id="track" class="wr-search-field typeahead" placeholder="Search Your Order Here" /> <button type="button" id="q_answer1" class="btn btn-default" >search</button>
+			   		 	<div style="text-align:right;margin-top:-4%;">Tracking Id Or Order ID search :<input style="background:white!important;margin-left:11px;padding:5px;" type="text" name="track" id="track" class="wr-search-field typeahead" placeholder="Search Your Order Here" /> <button type="button" id="q_answer1" class="btn btn-default" >search</button>
 			   		 	<button style="padding:2px 6px !important;background-color:limegreen;" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#export">Export</button>
 			   		
 			   		</div>
@@ -62,7 +62,7 @@ function ShowAll(){
           <h4 class="modal-title">Modal Header</h4>
         </div>
         <div class="modal-body">
-          <form method="POST" action="https://www.recyclepro.co.uk/wr-m6/crexport.php">
+          <form method="POST" action="wr-m6/crexport.php">
               <input style="background:white!important;margin-left:11px;padding:5px;" type="date" name="date3"  class="form-control" placeholder="Enter Date 1" /> 
               </br>
               <input style="background:white!important;margin-left:11px;padding:5px;" type="date" name="date5"  class="form-control" placeholder="Enter Date 2" /> 
@@ -78,7 +78,7 @@ function ShowAll(){
     </div>
   </div>
                               <div class="table-responsive">
-                                 <table  style="margin-top:2%;"class="table table-striped jambo_table bulk_action">
+                                 <table id="example" style="margin-top:2%;"class="table table-striped jambo_table bulk_action">
                                     <thead>
                                        <tr class="headings">
                                           <th>#</th>
@@ -94,7 +94,7 @@ function ShowAll(){
                                     <tbody id="ord">
 									<?php 
 									$x=1;
-									$sql = "select *,DATE_FORMAT(Date_Time, '%e  %M  %Y') as top,DATE_FORMAT(Date_Time,'%H:%i:%s') as TIMEONLY from comparerecycle order by id desc";
+									$sql = "select *,DATE_FORMAT(Date_Time, '%e  %M  %Y') as top,DATE_FORMAT(Date_Time,'%H:%i:%s') as TIMEONLY from comparerecycle order by id desc Limit 100";
 									$record = $this->db->fetch_query($sql,$this->db->pdo_open());
 									foreach ($record as $row)
 									{
@@ -105,9 +105,14 @@ function ShowAll(){
 										<td><?php echo $x; ?>
 										<td>
 											<strong>Order Id: </strong><?php echo $row['ordid']; ?><br />
-											
-											<strong>Total Price: </strong><?php echo $row['quoted_price']; ?><br />
-																
+											<?php
+                                          if ($row['status']!='Compeleted')
+{
+?>
+											<strong>Total Price: </strong><?php if(!empty($row['revs'])){ echo $row['revs'] ;} else{ echo $row['quoted_price']; }?><br />
+											<?php
+                    }
+                    ?>					
 										</td>
 										<td>
 											<strong>User Name: </strong><?php echo $row['first_name'].' '.$row['last_name']; ?><br />
@@ -126,10 +131,79 @@ if ($_SESSION['admin_type']=='admin')
 										<td>
 										
 										<?php echo $row['product_name']; ?>
-										
+										<?php echo "<br>"; ?>
+											<?php if(empty($row['imei'])){?>
+									<button style="padding:2px 6px !important;background-color:limegreen;" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalz<?php echo $row['id']; ?>">Add Imei Number</button><?php } ?>
+									<?php echo "<br>"; ?>
+									<strong>IMEI Number: </strong><?php echo $row['imei']; ?>
+									<?php echo "<br>"; ?>
+									<strong>PO Number: </strong><?php echo $row['ponm']; ?>
+									<?php echo "<br>"; ?>
+									<div id="myModalz<?php echo $row['id']; ?>" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-md">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        
+                    </div>
+                    <div class="modal-body">
+
+                        <form class="form-horizontal form-label-left" action="compsavepoandime.php" method="post" enctype="multipart/form-data" >
+ <div class="item form-group">
+                                    
+                                    <div class="col-md-12">
+                                         
+                                         <input type="hidden" name="oid" required="required" value="<?php echo $row['id']; ?>"  class="form-control col-md-7 col-xs-12" >
+                                         <div class="row">
+                                         <div class="col-md-6">
+                                           <h3>Imei Number</h3>
+                                    </label>
+                                    </div>
+                                       <div class="col-md-6">
+                                           <input type="text" name="ime"   class="form-control col-md-7 col-xs-12" >
+                                           </div>
+                                           </div>
+                                           <div class="row">
+                                           <div class="col-md-6">
+                                        <h3>Po Number</h3>
+                                    </label>
+                                       </div>
+                                       <div class="col-md-6"><input type="text" name="pos"  class="form-control col-md-7 col-xs-12" >
+                                       <div>
+                                           
+                                       </div>
+                                        
+                                    </div>
+                                    </div>
+                                 </div>
+                                 </div>
+                                 <div class="form-group">
+                                    <div class="col-md-6 col-md-offset-3">
+                                       
+                                       <input type="submit" name="sbtbtn" class="btn btn-primary btn-lg" value="Submit"/>
+                                    </div>
+                                 </div>
+                              </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
 									
 									</td>
-									<td><?php echo $row['manufacturer_name']; ?> </br><button style="padding:2px 6px !important;" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal<?php echo $row['id']; ?>">View Label</button></br><button style="padding:2px 6px !important;background-color:limegreen;" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModals<?php echo $row['id']; ?>">Upload Label</button></td>
+									<?php 
+							$trk = "select * from pdflabel where label='".$row['manufacturer_name']."' ";
+									$trc = $this->db->fetch_query($trk,$this->db->pdo_open());
+									foreach ($trc as $tkr)
+									{
+									}
+									    ?>
+									<td><?php echo $tkr['code']; ?></br><button style="padding:2px 6px !important;" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal<?php echo $row['id']; ?>">View Label</button></br><button style="padding:2px 6px !important;background-color:limegreen;" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModals<?php echo $row['id']; ?>">Upload Label</button></td>
 									<div id="myModal<?php echo $row['id']; ?>" class="modal fade" role="dialog">
             <div class="modal-dialog modal-md">
 
@@ -141,7 +215,7 @@ if ($_SESSION['admin_type']=='admin')
                     </div>
                     <div class="modal-body">
 
-                        <embed src="https://www.recyclepro.co.uk/uploads/<?php echo $row['manufacturer_name']; ?>" frameborder="0" width="100%" height="400px">
+                        <embed src="uploads/<?php echo $row['manufacturer_name']; ?>" frameborder="0" width="100%" height="400px">
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -162,7 +236,7 @@ if ($_SESSION['admin_type']=='admin')
                     </div>
                     <div class="modal-body">
 
-                        <form class="form-horizontal form-label-left" action="https://www.recyclepro.co.uk/updlabels.php" method="post" enctype="multipart/form-data" >
+                        <form class="form-horizontal form-label-left" action="updlabels.php" method="post" enctype="multipart/form-data" >
  <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Label One <span class="required">*</span>
                                     </label>
@@ -215,6 +289,8 @@ if ($_SESSION['admin_type']=='admin')
 function ViewData($id){
 $sql = "select * from comparerecycle where ordid='".$id."' ";
 $row = $this->db->row($sql,$this->db->pdo_open());
+$sql5 = "select * from pdflabel where label='".$row['manufacturer_name']."' ";
+$row5 = $this->db->row($sql5,$this->db->pdo_open());
 
 ?>
 	<div class="row">
@@ -254,7 +330,10 @@ if ($_SESSION['admin_type']=='admin')
     <br>Phone: <?php echo $row['numbers']; ?>
                                           <br>Email: <?php echo $row['email']; ?>
                                           <br>Address: <?php echo $row['address_line_1'].','.$row['address_line_2'].','.$row['address_country'].','.$row['address_postcode']; ?>
-                                      <?php
+                                      <?php if($row['status']!='Compeleted'){?>
+                                      <br>Revised Price : <form method="POST" action="comprevs.php"><input type="hidden" name="odi" id="odi" value="<?php echo $row['id']; ?>" /><input type="number" class="" name="revs"><button style="margin-top:2%;" type="submit" class="btn btn-primary"> Revised</button></form>
+                   <?php } ?>                        
+                   <?php
 }
 ?>
                                        </address>
@@ -272,6 +351,7 @@ if ($_SESSION['admin_type']=='admin')
 										  <br><strong>Account No.: <?php echo $row['bank_account_number']; ?></strong>
 										  <br><strong>Sort Code: <?php echo $row['bank_sortcode']; ?></strong>
 										  <br><strong>Paypal Email.: <?php echo $row['paypal']; ?></strong>
+										  <br><strong>Tracking Number: <?php echo $row5['code']; ?></strong>
 										 
                                        </address>
                                        <?php
@@ -283,7 +363,7 @@ if ($_SESSION['admin_type']=='admin')
                                        <b>Order ID: <?php echo $row['ordid']; ?></b>
                                        <br>
                                        <br>
-                                       <b>Order Date:</b> <?php echo date('D d M, Y',strtotime($row['Date_Time'])); ?>
+                                       <b>Order Date:</b> <?php echo date('D d M, Y h:i:s',strtotime($row['Date_Time'])); ?>
                                        </br>
                                        <b>Last Update:</b> <?php echo $row['update_time']; ?>
                                        
@@ -302,7 +382,7 @@ if ($_SESSION['admin_type']=='admin')
                                                 <th>#</th>
                                                 <th>PRODUCT</th>
                                                 <th>SPECIFICATIONS</th>
-                                                <th>PRICE</th>
+                                                <th>IMEI</th><th>PRICE</th>
 												
                                                 
                                              </tr>
@@ -325,7 +405,6 @@ if ($_SESSION['admin_type']=='admin')
 													</a>
 													<p>
 													<?php echo $row_o['product_name']; ?><br />
-													
 													</p>
 												</td>
 												<td>
@@ -333,6 +412,18 @@ if ($_SESSION['admin_type']=='admin')
 													
 													Product Condition: <?php echo $row_o['conditions']; ?>
 												</td>
+												<td>
+    	    <?php if(empty($row_o['imei'])){?>
+    	    <form method="POST" action="wr-m6/com_imei_poes.php">
+    	    
+    	    <input type="hidden" name="id" value="<?php echo $row_o['ordid']; ?>"><label>IMEI :</label><input type="text" name="imei"><br/>
+    	<label>PO:</label><input type="text" name="poes"><br/>
+    	<input type="submit" value="submit"><br/>
+    	</form>
+    	<?php } else { ?>
+    	IMEI: <?php echo $row_o['imei']; ?></br>
+    	PO: <?php echo $row_o['ponm']; ?>
+    	<?php } ?></td>
 												<td>&pound; <?php echo $row_o['quoted_price']; ?>
     </td>
 												
@@ -362,6 +453,7 @@ if ($_SESSION['admin_type']=='admin')
 											<option value="Placed" <?php if($row_o['status']=='Placed') echo 'selected="selected"'; ?>>Placed</option>
 											<option value="Received" <?php if($row_o['status']=='Received') echo 'selected="selected"'; ?>>Received</option>
 											<option value="Revised"<?php if($row_o['status']=='Revised') echo 'selected="selected"'; ?>>Revised</option>
+											<option value="Pending Payment"<?php if($row['order_status']=='Pending Payment') echo 'selected="selected"'; ?>>Pending Payment</option>
 											<option value="Canceled" <?php if($row_o['status']=='Canceled') echo 'selected="selected"'; ?>>Canceled</option>
 											<option value="Compeleted" <?php if($row_o['status']=='Compeleted') echo 'selected="selected"'; ?>>Compeleted</option>
 										  </select>
@@ -397,7 +489,7 @@ if ($_SESSION['admin_type']=='admin')
                                        </p>
                                     </div>
                                     <div class="col-xs-3">
-                                         <form enctype="multipart/form-data" method="POST" action="https://www.recyclepro.co.uk/wr-m6/attach.php">
+                                         <form enctype="multipart/form-data" method="POST" action="wr-m6/attach.php">
 										   <p class="lead">Revise Image:</p>
 										   <input style="margin-top:2%;" type="file" name="image[0]"   required/>
 										   <input style="margin-top:2%;" type="file" name="image[1]"   />
@@ -407,6 +499,8 @@ if ($_SESSION['admin_type']=='admin')
 										   
 										    <input type="hidden" name="uid" id="uid" value="<?php echo $row_o['id']; ?>" />
 										     <input type="hidden" name="oid" id="oid" value="<?php echo $row_o['ordid']; ?>" />
+										     <input type="hidden" name="rev" id="rev" />
+										   
 										    <button style="margin-top:2%;" type="submit" class="btn btn-primary"> Revise Image Send</button>
 										   </form>
 										   </div>
@@ -423,7 +517,22 @@ if ($_SESSION['admin_type']=='admin')
 	?></td>
 
                                                 </tr>
-                                                
+                                                <tr>
+                                                   <th>Revised Price:</th>
+                                                   <td>&pound;<?php 
+                                                   if(!empty($row_o['revs']))
+                                                   {
+                                                     echo $row_o['revs'];  
+                                                   }
+                                                   else{
+                                                       
+                                                   
+		echo '';
+                                                   }
+	
+		?> </td>
+                                                <tr><input type="radio" name="bedStatus" id="allot" checked="checked" value="allot">No Review
+<input type="radio" name="bedStatus" id="transfer" value="transfer">Review</tr>
                                              </tbody>
                                           </table>
                                           <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
@@ -437,6 +546,8 @@ if ($_SESSION['admin_type']=='admin')
 										  <th class="column-title">Name</th>
 										  <th class="column-title">Note</th>
 										  <th class="column-title">Date</th>
+										  <th class="column-title">User</th>
+										  <th class="column-title">Update Date</th>
                                           
                                        </tr>
                                     </thead>
@@ -463,7 +574,14 @@ if ($_SESSION['admin_type']=='admin')
 											<?php echo $row39['date']; ?>
 											
 										</td>
-										
+										<td>
+											<?php echo $row39['User']; ?>
+											
+										</td>
+										<td>
+											<?php echo $row39['Date_Time']; ?>
+											
+										</td>
 										
                                                       </tr>
                                              </tbody>
@@ -588,11 +706,12 @@ function PageJSCall(){
 		var detail = $("#detail").val();
 		var prc = $("#prc").val();
 		var dte = $("#dte").val();
+		var rev = $("#rev").val();
 		var del_id = 1;
 		var info = 'user_id=' + user_id;
 		$.ajax({
 		   type: "POST",
-		   url: "ajaxcall.php?index=updateSta&order_id=" + order_id + "&order_status=" + order_status + "&prc=" + prc + "&shipping_status=" + shipping_status + "&payment_status=" + payment_status + "&rprice=" + rprice + "&detail=" + detail + "&dte=" + dte,
+		   url: "ajaxcall.php?index=updateSta&order_id=" + order_id + "&order_status=" + order_status + "&prc=" + prc + "&shipping_status=" + shipping_status + "&payment_status=" + payment_status + "&rprice=" + rprice + "&detail=" + detail + "&dte=" + dte+ "&rev=" + rev,
 		   data: info,
 		  success: function(){
 			  window.location.reload();
@@ -602,12 +721,29 @@ function PageJSCall(){
 	return false;
 	
 		});
+		$(document).ready(function() {
+    $('input:radio[name=bedStatus]').change(function() {
+        if (this.value == 'allot') {
+           $("#rev").val(this.value);
+        }
+        else if (this.value == 'transfer') {
+            $("#rev").val(this.value);
+        }
+    });
+});
 		</script>
 		
 	<?php 
 }
 
-function UpdateProStatus($order_id,$order_status,$prc,$shipping_status,$payment_status,$rprice,$detail,$dte,$user_id){
+function UpdateProStatus($order_id,$order_status,$prc,$shipping_status,$payment_status,$rprice,$detail,$dte,$user_id,$rev){
+    if($rev=='transfer'){
+    $review='<p style="font-size: 38px; line-height: 1.2; word-break: break-word; text-align: center; mso-line-height-alt: 46px; margin: 0;"><span style="font-size: 38px;"><strong>Please leave us a review</strong></span></p>
+<div style="text-align:center;"><a href="https://uk.trustpilot.com/evaluate/recyclepro.co.uk?utm_medium=trustbox&utm_source=TrustBoxReviewCollector"><img src="images/trustpilot_logo.png"></a></div>';
+}
+else{
+    $review='';
+}
 	$sql_usr="select * from comparerecycle where ordid=$order_id";
 	$row_usr = $this->db->row($sql_usr,$this->db->pdo_open());
 	if($order_status=="Received")
@@ -615,7 +751,7 @@ function UpdateProStatus($order_id,$order_status,$prc,$shipping_status,$payment_
 	$this->objMail = new PHPMailer();		
 	$this->objMail->IsHTML(true);
 	$this->objMail->From = 'noreply@recyclepro.co.uk';
-	$this->objMail->addBCC('recyclepro.co.uk+eeb5f46e46@invite.trustpilot.com');
+	//$this->objMail->addBCC('recyclepro.co.uk+eeb5f46e46@invite.trustpilot.com');
 	$this->objMail->FromName = 'Recycle Pro';
 	$this->objMail->Sender = 'noreply@recyclepro.co.uk';
 	//$this->objMail->AddAddress($row_usr['email']);
@@ -634,7 +770,7 @@ function UpdateProStatus($order_id,$order_status,$prc,$shipping_status,$payment_
                     <div class="o_col o_col-2" style="display: inline-block;vertical-align: top;width: 100%;max-width: 200px;">
                       <div style="font-size: 24px; line-height: 24px; height: 24px;">&nbsp; </div>
                       <div class="o_px-xs o_sans o_text o_left o_xs-center" data-size="Text Default" data-min="12" data-max="20" style="font-family: Helvetica, Arial, sans-serif; margin-top: 0px; margin-bottom: 0px; font-size: 16px; line-height: 27.2px;  padding-left: 8px; padding-right: 8px;">
-                        <p style="margin-top: 0px;margin-bottom: 0px;"><a class="o_text-white" href="https://example.com/" data-color="White" style="text-decoration: none;outline: none;color: #ffffff;"><img src="https://www.recyclepro.co.uk/img/m6-logo-1.png" width="136" height="36" alt="SimpleApp" style="max-width: 136px;-ms-interpolation-mode: bicubic;vertical-align: middle;border: 0;line-height: 100%;height: auto;outline: none;text-decoration: none;" data-crop="false"></a></p>
+                        <p style="margin-top: 0px;margin-bottom: 0px;"><a class="o_text-white" href="https://example.com/" data-color="White" style="text-decoration: none;outline: none;color: #ffffff;"><img src="img/m6-logo-1.png" width="136" height="36" alt="SimpleApp" style="max-width: 136px;-ms-interpolation-mode: bicubic;vertical-align: middle;border: 0;line-height: 100%;height: auto;outline: none;text-decoration: none;" data-crop="false"></a></p>
                       </div>
                     </div>
                     <!--[if mso]></td><td width="400" align="right" valign="top" style="padding:0px 8px;"><![endif]-->
@@ -669,8 +805,9 @@ function UpdateProStatus($order_id,$order_status,$prc,$shipping_status,$payment_
                         </tr>
                       </tbody>
                     </table>
-                    <h2 class="o_heading o_text-dark o_mb-xxs" data-color="Dark" data-size="Heading 2" data-min="20" data-max="40" style="font-family: Helvetica, Arial, sans-serif; font-weight: bold; margin-top: 0px; margin-bottom: 4px; line-height: 39px;"><span style="font-size: 19px;"><br></span><font color="#242b3d"><span style="font-size: 30px;" contenteditable="false" class="editable">Hi '.$row_usr['first_name'].' '.$row_usr['last_name'].' your order has arrived!</span></font></h2><h2 class="o_heading o_text-dark o_mb-xxs" data-color="Dark" data-size="Heading 2" data-min="20" data-max="40" style="font-family: Helvetica, Arial, sans-serif; font-weight: bold; margin-top: 0px; margin-bottom: 4px; line-height: 39px; font-size: larger;">Your order '.$order_id.' has arrived at our warehouse and our quality assessment department will check your items soon.</h2>
-                  </td>
+                    <h2 class="o_heading o_text-dark o_mb-xxs" data-color="Dark" data-size="Heading 2" data-min="20" data-max="40" style="font-family: Helvetica, Arial, sans-serif; font-weight: bold; margin-top: 0px; margin-bottom: 4px; line-height: 39px;"><span style="font-size: 19px;"><br></span><font color="#242b3d"><span style="font-size: 30px;" contenteditable="false" class="editable">Hi '.$row_usr['first_name'].' '.$row_usr['last_name'].' your order has arrived!</span></font></h2><h2 class="o_heading o_text-dark o_mb-xxs" data-color="Dark" data-size="Heading 2" data-min="20" data-max="40" style="font-family: Helvetica, Arial, sans-serif; font-weight: bold; margin-top: 0px; margin-bottom: 4px; line-height: 39px; font-size: larger;">Your order '.$order_id.' has arrived at our warehouse and our quality assessment department will check your items soon.</br>
+                    As soon as your device is checked you will receive your payment within next 24 hours in your account.</h2>
+                      </td>
                 </tr>
               </tbody>
             </table>
@@ -686,8 +823,7 @@ function UpdateProStatus($order_id,$order_status,$prc,$shipping_status,$payment_
             <table class="o_block last-table" width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation" style="max-width: 632px;margin: 0 auto;">
               <tbody>
                 <tr>
-                  <td class="o_bg-white o_px-md o_py o_sans o_text o_text-secondary editable" align="center" data-bgcolor="Bg White" data-color="Secondary" data-size="Text Default" data-min="12" data-max="20" style="font-family: Helvetica, Arial, sans-serif;margin-top: 0px;margin-bottom: 0px;font-size: 16px;line-height: 24px;background-color: #ffffff;color: #424651;padding-left: 24px;padding-right: 24px;padding-top: 16px;padding-bottom: 16px;" contenteditable="false"><h4 class="o_heading o_text-dark o_mb-xs" data-color="Dark" data-size="Heading 4" data-min="10" data-max="26" style="font-family: Helvetica, Arial, sans-serif;font-weight: bold;margin-top: 0px;margin-bottom: 8px;color: #242b3d;font-size: 18px;line-height: 23px;"><br></h4><h4 class="o_heading o_text-dark o_mb-xs" data-color="Dark" data-size="Heading 4" data-min="10" data-max="26" style="font-family: Helvetica, Arial, sans-serif;font-weight: bold;margin-top: 0px;margin-bottom: 8px;color: #242b3d;font-size: 18px;line-height: 23px;">Hello, '.$row_usr['first_name'].' '.$row_usr['last_name'].' ;</h4><h4 class="o_heading o_text-dark o_mb-xs" data-color="Dark" data-size="Heading 4" data-min="10" data-max="26" style="font-family: Helvetica, Arial, sans-serif; margin-top: 0px; margin-bottom: 8px; color: rgb(36, 43, 61); font-size: 18px; line-height: 23px;"><span style="font-weight: normal;">Thank you for ordering from Recycle Pro. If your items arrive before 2pm, we will process your payment on the next working day. you will get paid through the payment method you selected within  next seven working days.</span><span style="font-size: 16px; color: rgb(66, 70, 81);"><span style="font-weight: normal;">.</span></span></h4>
-                  </td>
+                  
                 </tr>
               </tbody>
             </table>
@@ -810,6 +946,9 @@ function UpdateProStatus($order_id,$order_status,$prc,$shipping_status,$payment_
 }
 	elseif($order_status=="Canceled")
 	{
+	    $payment_status='Canceled';
+	    $recepients = array($row_usr['email'],'saad.majid@m6repairs.co.uk','areeb.tariq@m6repairs.co.uk');
+	    foreach($recepients as $recepient){
 	$this->objMail = new PHPMailer();		
 	$this->objMail->IsHTML(true);
 	$this->objMail->From = 'noreply@recyclepro.co.uk';
@@ -817,8 +956,64 @@ function UpdateProStatus($order_id,$order_status,$prc,$shipping_status,$payment_
 	$this->objMail->FromName = 'Recycle Pro';
 	$this->objMail->Sender = 'noreply@recyclepro.co.uk';
 	//$this->objMail->AddAddress($row_usr['email']);
-	$this->objMail->AddAddress($row_usr['email']);
-	$this->objMail->Subject = 'Your RecyclePro Order Status is Updated.';
+	$this->objMail->AddAddress($recepient);
+			if($recepient=='saad.majid@m6repairs.co.uk' || $recepient=='areeb.tariq@m6repairs.co.uk'){
+		    $this->objMail->Subject = 'Your Order ID : '.$order_id.' is '.$payment_status.'';
+	    $this->objMail->Body .= '<table>
+  <tr>
+    <th>Order ID</th>
+    <td>'.$order_id.'</td>
+    </tr>
+  <tr>
+    <th>Name</th>
+    <td>'.$row_usr['first_name'].' '.$row_usr['last_name'].'</td>
+    </tr>
+  <tr>
+    <th>Email</th>
+     <td>'.$row_usr['email'].'</td>
+    </tr>
+  <tr>
+    <th>Device</th>
+    <td>'.$row_usr['product_name'].'</td>
+    </tr>
+  <tr>
+    <th>Price</th>
+    <td>'.$prc.'</td>
+    </tr>
+  <tr>
+    <th>Payment</th>
+     <td>'.$payment_status.'</td>
+    </tr>
+  <tr>
+    <th>Order status</th>
+    <td>'.$order_status.'</td>
+    </tr>
+  <tr>
+    <th>Date</th>
+    <td>'.$row_usr['Date_Time'].'</td>
+    </tr>
+  <tr>
+    <th>Last Update</th>
+    <td>'.$row_usr['update_time'].'</td>
+  </tr>
+  <tr>
+    <th>Account Number</th>
+    <td>'.$row_usr['bank_account_number'].'</td>
+  </tr>
+  <tr>
+    <th>Sort No</th>
+    <td>'.$row_usr['bank_sortcode'].'</td>
+  </tr>
+  <tr>
+    <th>Paypal</th>
+    <td>'.$row_usr['paypal'].'</td>
+  </tr>
+  
+  </table>
+  ';
+	}
+	else{
+	    $this->objMail->Subject = 'Your RecyclePro Order Status is Updated.';
 	$this->objMail->Body .= '<div id="frame" class="ui-sortable" style="min-height: 250px; transform: scale(1);"><div class="parentOfBg"></div><table data-module="header" data-visible="false" data-thumb="http://www.stampready.net/dashboard/editor/user_uploads/zip_uploads/2018/11/19/pcVNfzKjZ3goPqkxr2hYT0ws/service_canceled/thumbnails/header.png" width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation" class="">
       <tbody>
         <tr>
@@ -828,7 +1023,7 @@ function UpdateProStatus($order_id,$order_status,$prc,$shipping_status,$payment_
               <tbody>
                 <tr>
                   <td class="o_bg-dark o_px o_py-md o_br-t o_sans o_text" align="center" data-bgcolor="Bg Dark" data-size="Text Default" data-min="12" data-max="20" style="font-family: Helvetica, Arial, sans-serif; margin-top: 0px; margin-bottom: 0px; font-size: 19px; line-height: 27.55px; background-color: rgb(36, 43, 61); border-radius: 4px 4px 0px 0px; padding: 24px 16px;">
-                    <p style="margin-top: 0px;margin-bottom: 0px;"><a class="o_text-white" href="https://example.com/" data-color="White" style="text-decoration: none;outline: none;color: #ffffff;"><img src="https://www.recyclepro.co.uk/img/m6-logo-1.png" width="136" height="36" alt="SimpleApp" style="max-width: 136px;-ms-interpolation-mode: bicubic;vertical-align: middle;border: 0;line-height: 100%;height: auto;outline: none;text-decoration: none;" data-crop="false"></a></p>
+                    <p style="margin-top: 0px;margin-bottom: 0px;"><a class="o_text-white" href="https://example.com/" data-color="White" style="text-decoration: none;outline: none;color: #ffffff;"><img src="img/m6-logo-1.png" width="136" height="36" alt="SimpleApp" style="max-width: 136px;-ms-interpolation-mode: bicubic;vertical-align: middle;border: 0;line-height: 100%;height: auto;outline: none;text-decoration: none;" data-crop="false"></a></p>
                   </td>
                 </tr>
               </tbody>
@@ -929,20 +1124,153 @@ function UpdateProStatus($order_id,$order_status,$prc,$shipping_status,$payment_
             <div id="tip"></div>
 
           </div></div>';
+	}
 	$this->objMail->WordWrap = 50;
 	$this->objMail->Send();
+	    }	    
 }
-elseif($order_status=="Compeleted")
+elseif($order_status=="Pending Payment")
 	{
+	    $payment_status='Approved';
+	    $recepients = array('saad.majid@m6repairs.co.uk','areeb.tariq@m6repairs.co.uk');
+	    foreach($recepients as $recepient){
 	$this->objMail = new PHPMailer();		
 	$this->objMail->IsHTML(true);
 	$this->objMail->From = 'noreply@recyclepro.co.uk';
-	$this->objMail->addBCC('recyclepro.co.uk+eeb5f46e46@invite.trustpilot.com');
+//	$this->objMail->addBCC('recyclepro.co.uk+eeb5f46e46@invite.trustpilot.com');
 	$this->objMail->FromName = 'Recycle Pro';
 	$this->objMail->Sender = 'noreply@recyclepro.co.uk';
 	//$this->objMail->AddAddress($row_usr['email']);
-	$this->objMail->AddAddress($row_usr['email']);
-	$this->objMail->Subject = 'Your RecyclePro Order Status is Updated.';
+	$this->objMail->AddAddress($recepient);
+	$this->objMail->Subject = 'Your Order ID : '.$order_id.' is '.$payment_status.'';
+	$this->objMail->Body .= '<div><h3>This Order Has Been '.$payment_status.'</h3></div>
+	<table>
+ <tr>
+    <th>Order ID</th>
+    <td>'.$order_id.'</td>
+    </tr>
+  <tr>
+    <th>Name</th>
+    <td>'.$row_usr['first_name'].' '.$row_usr['last_name'].'</td>
+    </tr>
+  <tr>
+    <th>Email</th>
+     <td>'.$row_usr['email'].'</td>
+    </tr>
+  <tr>
+    <th>Device</th>
+    <td>'.$row_usr['product_name'].'</td>
+    </tr>
+  <tr>
+    <th>Price</th>
+    <td>'.$prc.'</td>
+    </tr>
+  <tr>
+    <th>Payment</th>
+     <td>'.$payment_status.'</td>
+    </tr>
+  <tr>
+    <th>Order status</th>
+    <td>'.$order_status.'</td>
+    </tr>
+  <tr>
+    <th>Date</th>
+    <td>'.$row_usr['Date_Time'].'</td>
+    </tr>
+  <tr>
+    <th>Last Update</th>
+    <td>'.$row_usr['update_time'].'</td>
+  </tr>
+  <tr>
+    <th>Account Number</th>
+    <td>'.$row_usr['bank_account_number'].'</td>
+  </tr>
+  <tr>
+    <th>Sort No</th>
+    <td>'.$row_usr['bank_sortcode'].'</td>
+  </tr>
+  <tr>
+    <th>Paypal</th>
+    <td>'.$row_usr['paypal'].'</td>
+  </tr>
+  </table>
+  ';
+	$this->objMail->WordWrap = 50;
+	$this->objMail->Send();
+}
+}
+elseif($order_status=="Compeleted")
+	{
+	    $payment_status='Paid';
+	    $recepients = array($row_usr['email'],'saad.majid@m6repairs.co.uk','areeb.tariq@m6repairs.co.uk');
+	    foreach($recepients as $recepient){
+	$this->objMail = new PHPMailer();		
+	$this->objMail->IsHTML(true);
+	$this->objMail->From = 'noreply@recyclepro.co.uk';
+	//$this->objMail->addBCC('recyclepro.co.uk+eeb5f46e46@invite.trustpilot.com');
+	$this->objMail->FromName = 'Recycle Pro';
+	$this->objMail->Sender = 'noreply@recyclepro.co.uk';
+	//$this->objMail->AddAddress($row_usr['email']);
+	$this->objMail->AddAddress($recepient);
+	
+	if($recepient=='saad.majid@m6repairs.co.uk' || $recepient=='areeb.tariq@m6repairs.co.uk'){
+	    $this->objMail->Subject = 'Your Order ID : '.$order_id.' is '.$payment_status.'';
+	    $this->objMail->Body .= '<div><h3>Your Order ID : '.$order_id.' is '.$payment_status.'</h3></div>
+	<table>
+  <tr>
+    <th>Order ID</th>
+    <td>'.$order_id.'</td>
+    </tr>
+  <tr>
+    <th>Name</th>
+    <td>'.$row_usr['first_name'].' '.$row_usr['last_name'].'</td>
+    </tr>
+  <tr>
+    <th>Email</th>
+     <td>'.$row_usr['email'].'</td>
+    </tr>
+  <tr>
+    <th>Device</th>
+    <td>'.$row_usr['product_name'].'</td>
+    </tr>
+  <tr>
+    <th>Price</th>
+    <td>'.$prc.'</td>
+    </tr>
+  <tr>
+    <th>Payment</th>
+     <td>'.$payment_status.'</td>
+    </tr>
+  <tr>
+    <th>Order status</th>
+    <td>'.$order_status.'</td>
+    </tr>
+  <tr>
+    <th>Date</th>
+    <td>'.$row_usr['Date_Time'].'</td>
+    </tr>
+  <tr>
+    <th>Last Update</th>
+    <td>'.$row_usr['update_time'].'</td>
+  </tr>
+  <tr>
+    <th>Account Number</th>
+    <td>'.$row_usr['bank_account_number'].'</td>
+  </tr>
+  <tr>
+    <th>Sort No</th>
+    <td>'.$row_usr['bank_sortcode'].'</td>
+  </tr>
+  <tr>
+    <th>Paypal</th>
+    <td>'.$row_usr['paypal'].'</td>
+  </tr>
+  
+  </table>
+  ';
+	}
+	else{
+	    $this->objMail->Subject = 'Your RecyclePro Order Status is Updated.';
 	$this->objMail->Body .= '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
@@ -1076,7 +1404,7 @@ elseif($order_status=="Compeleted")
 <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:20px; padding-bottom:20px; padding-right: 0px; padding-left: 0px;">
 <!--<![endif]-->
 <div align="center" class="img-container center autowidth" style="padding-right: 0px;padding-left: 0px;">
-<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px"><td style="padding-right: 0px;padding-left: 0px;" align="center"><![endif]--><a href="https://uk.trustpilot.com/evaluate/recyclepro.co.uk?utm_medium=trustbox&utm_source=TrustBoxReviewCollector" style="outline:none" tabindex="-1" target="_blank"> <img align="center" alt="Logo" border="0" class="center autowidth" src="https://www.recyclepro.co.uk/img/recyclepro.jpg" style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: 0; width: 100%; max-width: 640px; display: block;" title="Logo" width="640"/></a>
+<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px"><td style="padding-right: 0px;padding-left: 0px;" align="center"><![endif]--><a href="https://uk.trustpilot.com/evaluate/recyclepro.co.uk?utm_medium=trustbox&utm_source=TrustBoxReviewCollector" style="outline:none" tabindex="-1" target="_blank"> <img align="center" alt="Logo" border="0" class="center autowidth" src="img/recyclepro.jpg" style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: 0; width: 100%; max-width: 640px; display: block;" title="Logo" width="640"/></a>
 <!--[if mso]></td></tr></table><![endif]-->
 </div>
 <!--[if (!mso)&(!IE)]><!-->
@@ -1103,19 +1431,21 @@ elseif($order_status=="Compeleted")
 <div style="color:#ffffff;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;line-height:1.2;padding-top:30px;padding-right:10px;padding-bottom:0px;padding-left:10px;">
 <div style="font-size: 14px; line-height: 1.2; color: #ffffff; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 17px;">
 <p style="font-size: 38px; line-height: 1.2; word-break: break-word; text-align: center; mso-line-height-alt: 46px; margin: 0;"><span style="font-size: 38px;"><strong>Please leave us a review</strong></span></p>
-<div style="text-align:center;"><a href="https://uk.trustpilot.com/evaluate/recyclepro.co.uk?utm_medium=trustbox&utm_source=TrustBoxReviewCollector"><img src="https://www.recyclepro.co.uk/images/trustpilot.png"></a></div>
+'.$review.'
+
 <p style="font-size: 38px; line-height: 1.2; word-break: break-word; text-align: center; mso-line-height-alt: 46px; margin: 0;"><span style="font-size: 38px;"><strong>Payment Sent Successfully</strong></span></p>
 <p style="font-size: 14px; line-height: 1.2; word-break: break-word; text-align: center; mso-line-height-alt: 17px; margin: 0;"></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
-<a href="https://www.recyclepro.co.uk/login.php"><div align="center" class="img-container center autowidth" style="padding-right: 0px;padding-left: 0px;">
-<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px"><td style="padding-right: 0px;padding-left: 0px;" align="center"><![endif]--><img align="center" alt="Image" border="0" class="center autowidth" src="https://www.recyclepro.co.uk/img/1.png" style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: 0; width: 100%; max-width: 640px; display: block;" title="Image" width="640"/>
+<a href="login.php"><div align="center" class="img-container center autowidth" style="padding-right: 0px;padding-left: 0px;">
+<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px"><td style="padding-right: 0px;padding-left: 0px;" align="center"><![endif]--><img align="center" alt="Image" border="0" class="center autowidth" src="img/1.png" style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: 0; width: 100%; max-width: 640px; display: block;" title="Image" width="640"/>
 <!--[if mso]></td></tr></table><![endif]-->
 </div></a>
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 30px; padding-bottom: 0px; font-family: Tahoma, Verdana, sans-serif"><![endif]-->
 <div style="color:#ffffff;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;line-height:1.2;padding-top:30px;padding-right:10px;padding-bottom:0px;padding-left:10px;">
 <div style="font-size: 14px; line-height: 1.2; color: #ffffff; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 17px;">
+
 <p style="font-size: 34px; line-height: 1.2; word-break: break-word; text-align: center; mso-line-height-alt: 41px; margin: 0;"><span style="font-size: 34px;"><strong>Dear '.$row_usr['first_name'].' '.$row_usr['last_name'].',</strong></span></p>
 </div>
 </div>
@@ -1181,8 +1511,8 @@ elseif($order_status=="Compeleted")
 <table align="center" cellpadding="0" cellspacing="0" class="social_table" role="presentation" style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-tspace: 0; mso-table-rspace: 0; mso-table-bspace: 0; mso-table-lspace: 0;" valign="top">
 <tbody>
 <tr align="center" style="vertical-align: top; display: inline-block; text-align: center;" valign="top">
-<td style="word-break: break-word; vertical-align: top; padding-bottom: 10px; padding-right: 5px; padding-left: 5px;" valign="top"><a href="https://www.facebook.com/Recycle-pro-102337717901297/" target="_blank"><img alt="Facebook" height="32" src="https://www.recyclepro.co.uk/img/facebook2x.png" style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: 0; display: block;" title="Facebook" width="32"/></a></td>
-<td style="word-break: break-word; vertical-align: top; padding-bottom: 10px; padding-right: 5px; padding-left: 5px;" valign="top"><a href="https://www.instagram.com/recycleprouk/" target="_blank"><img alt="Instagram" height="32" src="https://www.recyclepro.co.uk/img/instagram2x.png" style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: 0; display: block;" title="Instagram" width="32"/></a></td>
+<td style="word-break: break-word; vertical-align: top; padding-bottom: 10px; padding-right: 5px; padding-left: 5px;" valign="top"><a href="https://www.facebook.com/Recycle-pro-102337717901297/" target="_blank"><img alt="Facebook" height="32" src="img/facebook2x.png" style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: 0; display: block;" title="Facebook" width="32"/></a></td>
+<td style="word-break: break-word; vertical-align: top; padding-bottom: 10px; padding-right: 5px; padding-left: 5px;" valign="top"><a href="https://www.instagram.com/recycleprouk/" target="_blank"><img alt="Instagram" height="32" src="img/instagram2x.png" style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: 0; display: block;" title="Instagram" width="32"/></a></td>
 </tr>
 </tbody>
 </table>
@@ -1236,8 +1566,10 @@ elseif($order_status=="Compeleted")
 <!--[if (IE)]></div><![endif]-->
 </body>
 </html>';
+}
 	$this->objMail->WordWrap = 50;
 	$this->objMail->Send();
+	    }
 }
 elseif($order_status=="Revised")
 	{
@@ -1251,7 +1583,7 @@ elseif($order_status=="Revised")
 	$this->objMail = new PHPMailer();		
 	$this->objMail->IsHTML(true);
 	$this->objMail->From = 'noreply@recyclepro.co.uk';
-	$this->objMail->addBCC('recyclepro.co.uk+eeb5f46e46@invite.trustpilot.com');
+	//$this->objMail->addBCC('recyclepro.co.uk+eeb5f46e46@invite.trustpilot.com');
 	$this->objMail->FromName = 'Recycle Pro';
 	$this->objMail->Sender = 'noreply@recyclepro.co.uk';
 	//$this->objMail->AddAddress($row_usr['email']);
@@ -1266,7 +1598,7 @@ elseif($order_status=="Revised")
                     <tbody>
                     <tr>
                         <td class="o_bg-dark o_px o_py-md o_br-t o_sans o_text" align="center" data-bgcolor="Bg Dark" data-size="Text Default" data-min="12" data-max="20" style="font-family: Helvetica, Arial, sans-serif; margin-top: 0px; margin-bottom: 0px; font-size: 17px; line-height: 24.65px; background-color: rgb(36, 43, 61); border-radius: 4px 4px 0px 0px; padding: 24px 16px;">
-                            <p style="margin-top: 0px;margin-bottom: 0px;"><a class="o_text-white" href="https://example.com/" data-color="White" style="text-decoration: none;outline: none;color: #ffffff;"><img src="https://www.recyclepro.co.uk/img/m6-logo-1.png" width="136" height="36" alt="SimpleApp" style="max-width: 136px;-ms-interpolation-mode: bicubic;vertical-align: middle;border: 0;line-height: 100%;height: auto;outline: none;text-decoration: none;" data-crop="false"></a></p>
+                            <p style="margin-top: 0px;margin-bottom: 0px;"><a class="o_text-white" href="https://example.com/" data-color="White" style="text-decoration: none;outline: none;color: #ffffff;"><img src="img/m6-logo-1.png" width="136" height="36" alt="SimpleApp" style="max-width: 136px;-ms-interpolation-mode: bicubic;vertical-align: middle;border: 0;line-height: 100%;height: auto;outline: none;text-decoration: none;" data-crop="false"></a></p>
                         </td>
                     </tr>
                     </tbody>
@@ -1361,7 +1693,7 @@ elseif($order_status=="Revised")
                                         <tbody>
                                         <tr>
                                             <td class="o_btn o_bg-primary o_br o_heading o_text" align="center" data-bgcolor="Bg Primary" data-size="Text Default" data-min="12" data-max="20" style="font-family: Helvetica, Arial, sans-serif; font-weight: bold; margin-top: 0px; margin-bottom: 0px; font-size: 17px; line-height: 24.65px; border-radius: 4px;" contenteditable="false">
-                                                <form action="https://www.recyclepro.co.uk/mail.php" method="post">
+                                                <form action="mail.php" method="post">
                                                 <input type="hidden" name="id" value="'.$order_id.'">
                                                 <button  type="submit" class="o_text-white editable"  data-color="White" style="	border: 0;
 	  width: 160px;
@@ -1389,7 +1721,7 @@ elseif($order_status=="Revised")
                                         <tbody>
                                         <tr>
                                             <td class="o_btn o_bg-dark o_br o_heading o_text" align="center" data-bgcolor="Bg Dark" data-size="Text Default" data-min="12" data-max="20" style="font-family: Helvetica, Arial, sans-serif; font-weight: bold; margin-top: 0px; margin-bottom: 0px; font-size: 17px; line-height: 24.65px; border-radius: 4px;" contenteditable="false">
-                                                <form action="https://www.recyclepro.co.uk/decline.php" method="post"><input type="hidden" name="id" value="'.$order_id.'"> <button type="submit" class="o_text-white editable"  data-color="White" style="	border: 0;
+                                                <form action="decline.php" method="post"><input type="hidden" name="id" value="'.$order_id.'"> <button type="submit" class="o_text-white editable"  data-color="White" style="	border: 0;
 	  width: 160px;
 	  padding: 10px;
 	  margin: 20px auto;
@@ -1490,10 +1822,9 @@ elseif($order_status=="Revised")
 }
 	$update_sql_array=array();
 	$update_sql_array['status'] = $order_status;
+	$update_sql_array['payment_status'] = $payment_status;
 	$update_sql_array['update_time']=$dte;
 	$this->db->pdoupdate(comparerecycle,$update_sql_array,'ordid',$order_id);
-
-	
 }
 
 } // Order Class End

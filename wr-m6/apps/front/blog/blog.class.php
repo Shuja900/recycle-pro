@@ -18,7 +18,15 @@ $row = $this->db->row($sql,$this->db->pdo_open());
 li{
     list-style-type: circle!important;
 }
-	</style>
+.blog-details .blogitem2-image {
+    position: relative;
+    overflow: hidden;
+    width: 50%;
+    height: auto;
+    float: right;
+    margin: 40px 0 0 0;
+    padding: 0px 0px 0px 30px;
+}	</style>
 <?php 
 }
 

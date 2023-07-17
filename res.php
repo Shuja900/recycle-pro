@@ -73,7 +73,7 @@ $msg .= '<div style="background-color: #efefef;color:#000000!important;font-size
            <div class="warning">
   <p><strong>Alert</strong> *Please note that if you did not receive your shipping label via email, go to Recyclepro.co.uk, log into your account and download the free shipping label from the order details section of your account.</p>
   </div>
-  <div style="text-align:center;"><a href="https://www.recyclepro.co.uk/login.php"  class="ho-button">
+  <div style="text-align:center;"><a href="login.php"  class="ho-button">
                                         <span>Click Here To Get Label</span>
                                     </a></div>
           <p style="font-size:11px;text-align:center;">Please note: If you are sending multiple orders, please pack them separately and attach the relevant label to each box.

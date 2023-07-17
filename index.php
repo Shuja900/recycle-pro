@@ -1,10 +1,17 @@
-<?php 
+<?php
 include('Db.php');
+$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+$url= $protocol .$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+if (strpos($url, "/?")!==false){
+   $yourURL="";
+   header("location: $yourURL", true, 301);
+}
 require_once("wr-m6/wrbasic/config.inc.php");
+require_once("wr-m6/apps/front/class/config.front.php");
 require_once('wr-m6/apps/front/layout/layout.class.php');
 require_once('wr-m6/apps/front/home/homepage.class.php');
 $layout_obj = new LayoutClass();
-$home_obj = new HomePage(); 
+$home_obj = new HomePage();
 extract($_REQUEST);
 ?>
 <!doctype html>
@@ -13,28 +20,44 @@ extract($_REQUEST);
 	<style>
 	ul.divcontact.dropdown-menu.src {
     border-color: black!important;
-    width: 60%;
+    width: 68%;
     overflow-y: scroll;
     overflow-x: hidden;
-   
+
 }
 .pdetails-description ul li {
     list-style: none;
     border: solid 1px #f1f1f1;
 }
+.header-middle {
+    padding: 0px!important;
+}
 .hrg{
     height:300px;
+}
+ul.divcontact.dropdown-menu.src.hrg {
+    left: 15px;
 }
 .tawk-icon-right {
     display: none;
 }
+.tawk-min-container {
+    height: 100%!important;
+    width: 100%!important;
+    background-color: #13564f !important;
+    border-radius: 10px !important;
+}
+
  ol{
     list-style-type: circle!important;
 }
 li{
-    list-style-type: circle!important;
+    list-style-type: none;
 }
 
+ul.divcontact.dropdown-menu.src.hrg {
+    margin-top: -1%;
+}
 .section-gap {
     padding: 10px 0px!important;
 }
@@ -42,7 +65,7 @@ li{
      margin-top:0px!important;
 }
 	.search-button {
-    background-color: #17a697;
+    background-color: #13564f;
     border-radius: 3px;
     color: white!important;
     text-shadow: -1px -1px 0 rgba(0,0,0,.15);
@@ -117,6 +140,7 @@ li{
   cursor: pointer;
   border-radius: 5px;
   text-align: center;
+  display: none;
 }
 .containers .bts {
   position: absolute;
@@ -132,6 +156,7 @@ li{
   cursor: pointer;
   border-radius: 5px;
   text-align: center;
+  display: none;
 }
 
 .modal-content {
@@ -148,22 +173,22 @@ li{
 }
 ul.typeahead.dropdown-menu{
     display: none!important;
-    
+
 }
 
 ul.divcontact.dropdown-menu.src {
     border-color: white!important;
-    
+
 }
 .dropdown-menu{
     display: block!important;
    }
 .slide{
-   
+
     position:absolute;
     left:0;
     opacity: 0;
-    
+
 
     -webkit-transition: opacity 1s;
     -moz-transition: opacity 1s;
@@ -173,11 +198,11 @@ ul.divcontact.dropdown-menu.src {
 
 .showing{
     opacity: 1;
-    
+
 }
 .new
 {
-    background-image:url(images/Newsletter.jpg);background-size:cover;
+    background-image:url(images/Newsletter.webp);background-size:cover;
 }
 @media only screen and (max-width: 690px) {
 .search-button {
@@ -185,9 +210,12 @@ ul.divcontact.dropdown-menu.src {
 }
 .new
 {
-    background-image:url(images/Newsletter.jpg);
+    background-image:url(images/Newsletter.webp);
     background-size: contain!important;
     background-repeat: no-repeat!important;
+}
+.wdth{
+    width:300px;
 }
 .newsheadings
 {
@@ -195,7 +223,7 @@ ul.divcontact.dropdown-menu.src {
 }
 .newsparagraghs
 {
-   font-size:12px!important; 
+   font-size:12px!important;
    width:60%;
 }
 .ptb-50
@@ -215,11 +243,11 @@ ul.divcontact.dropdown-menu.src {
     height:36px!important;
 }
 	ul.divcontact.dropdown-menu.src {
-    
+
     width: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
-   
+
 }
 .dropdown-item {
     display: block;
@@ -251,12 +279,10 @@ ul.divcontact.dropdown-menu.src {
      height:26px;
      left:44%;
 }
-.select-language.mob.zoom {
-    margin-left: 50%;
-}
+
 }
 @media only screen and (max-width: 1000px) {
-   
+
 
 .tab{
     display:block;
@@ -275,12 +301,12 @@ ul.divcontact.dropdown-menu.src {
 {
     width:auto;
     font-size:12px;
-    
+
     height:26px;
 }
 }
 .zoom {
- 
+
   transition: transform .2s;
   margin: 0 auto;
 }
@@ -288,7 +314,7 @@ ul.divcontact.dropdown-menu.src {
 .zoom:hover {
   -ms-transform: scale(1.1); /* IE 9 */
   -webkit-transform: scale(1.1); /* Safari 3-8 */
-  transform: scale(1.1); 
+  transform: scale(1.1);
 }
 a:hover {
     text-decoration: none;
@@ -324,7 +350,7 @@ a:hover {
 /******* Bnt Full********
 .MultiCarousel .leftLst, .MultiCarousel .rightLst {
     position: absolute;
-    border-radius: 50%; 
+    border-radius: 50%;
     height: 80%;
     top: 24px;
 }**/
@@ -342,75 +368,81 @@ a:hover {
 	background: #ccc;
 }
 
-
+.mean-container .mean-bar {
+    float: left;
+    background: 0 0;
+    padding: 9px;
+    min-height: 40px;
+    z-index: 99;
+}
 	</style>
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<?php $layout_obj->TitleGeneral(); ?>
-	
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Favicon -->
-	<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet"> 
 	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-	
+
 
 	<!-- Google font (font-family: 'Roboto', sans-serif;) -->
-	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700" rel="stylesheet">
 
 	<!-- Plugins -->
 	<link rel="stylesheet" href="css/bootstrap.min.css">
+
 	<link rel="stylesheet" href="css/plugins.css">
-	
 
 	<!-- Style Css -->
 	<link rel="stylesheet" href="style.css">
-	<link rel="stylesheet" href="css/css-utilities-technovibes.css">
+	<!--<link rel="stylesheet" href="css/css-utilities-technovibes.css">-->
 	<!-- Custom Styles -->
 	<link rel="stylesheet" href="css/custom.css">
 <!--	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
 	<script src="js/page.js"></script>
 	<!--<link rel="stylesheet" href="css/linearicons.css">-->
-			<link rel="stylesheet" href="home/css/font-awesome.min.css">
-			<link rel="stylesheet" href="home/css/bootstrap.css">
+			<!-- <link rel="stylesheet" href="home/css/bootstrap.css"> -->
 			<!--<link rel="stylesheet" href="home/css/magnific-popup.css">-->
-		<link rel="stylesheet" href="home/css/nice-select.css">							
+		<!--<link rel="stylesheet" href="home/css/nice-select.css">
 			<link rel="stylesheet" href="home/css/animate.min.css">
-			<link rel="stylesheet" href="home/css/owl.carousel.css">				
-			<link rel="stylesheet" href="home/css/main.css">
-			<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-			
+			<link rel="stylesheet" href="home/css/owl.carousel.css">-->
+			<!-- <link rel="stylesheet" href="home/css/main.css"> -->
+
 
 	<?php echo $layout_obj->getBasicVals('Header_codes','option_value'); ?>
+	
+	<!-- jQuery Modal -->
+
+	
 </head>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Recycle Pro",
-  "url": "https://www.recyclepro.co.uk/",
-  "logo": "https://www.recyclepro.co.uk/img/m6-logo-1.png",
+  "url": "",
+  "logo": "img/m6-logo-1.webp",
   "sameAs": [
     "https://www.facebook.com/Recycle-pro-102337717901297/"
    ]
 }
 </script>
 <body>
-	<?php echo $layout_obj->getBasicVals('After_body_tags','option_value'); ?>
+    	<?php echo $layout_obj->getBasicVals('After_body_tags','option_value'); ?>
 	<div id="wrapper" class="wrapper">
 
 		<!-- Header -->
 		<?php $layout_obj->pageHead('home'); ?>
 		<!--// Header -->
 		<!-- start banner Area -->
-		
-					
+
+
 					<!-- Image Map Generated by http://www.image-map.net/ -->
 <div class="containers">
-<img src="images/2-rp.webp" >
-<button style="background-color:#17a697;" onclick="document.location='https://www.recyclepro.co.uk/#portfolio'" class="btn">Start Selling</button>
+<img src="images/2-rp.webp" alt="main-cover" height="100%" width="100%">
+<button style="background-color:#13564f;" onclick="document.location='#portfolio'" class="btn">Start Selling</button>
 <button style="background-color:#17a2b8;" onclick="document.location='https://shoprecyclepro.co.uk/'" class="bts">Start Shopping</button>
 </div>
-		
+
 			<!-- End banner Area -->
 <!-- Start services Area -->
 <?php
@@ -428,19 +460,19 @@ while($count=mysqli_fetch_array($counter))
   <div class="modal" id="myModal">
     <div class="modal-dialog modal-lg">
       <div style="margin-top:30%;" class="modal-content">
-      
+
         <!-- Modal Header -->
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-        
+
         <!-- Modal body -->
         <div  class="modal-body new">
           <div style="background-color:transparent!important;" class="ho-section newsletter-area  ptb-50">
 	<div class="container">
-		
-		
-			
+
+
+
 <div class="row">
 			<div class="col-md-6">
 			<div class="newsletter-content">
@@ -466,49 +498,49 @@ while($count=mysqli_fetch_array($counter))
 				</div><!-- mailchimp-alerts end -->
 			</div>
 		</div>
-		
+
 	</div>
 </div>
 	</div>
 </div>
-       
+
         <!-- Modal footer -->
-        
+
       </div>
     </div>
     </div>
   <section style="background-color: #f4f4f4;" class="services-area deskc ">
-    <img  src="images/shipbanner.webp" alt="">
+    <img  src="images/shipbanner.webp" alt="" height="100%" width="100%">
     </section
-		
-			
+
+
 			<section style="background-color: #f4f4f4;" class="services-area tab ">
-				
+
 		            <div class="row d-flex justify-content-center">
 		                <div class="menu-content  col-lg-7">
 		                    <div class="title text-center">
-		                        <h1 style="color:#17a697!important;margin-top:4%;" class="mb-10">Why Sell with Recyclepro?</h1>
-		                       
+		                        <h1 style="color:#13564f!important;margin-top:4%;" class="mb-10">Why Sell with Recyclepro?</h1>
+
 		                    </div>
 		                </div>
-		            </div>						
+		            </div>
 					<div class="row">
 						<div class="col-lg-5 col-md-10">
 							<div class="single-services">
-								<img src="images/check9.png" alt="check9">
+								<img class="wdth" src="images/check9.webp" alt="check9" height="100%" width="100%">
 							</div>
 						</div>
 
 						<div class="col-lg-5 col-md-12">
 							<div class="row">
 							    <div class="col-lg-6 col-md-6">
-							<div  class="single-services" >
-								<span style="color:black;font-weight:600;font-size:30px;" class="lnr fa fa-volume-control-phone"></span>
-								<h4>Support</h4>
+							<div  class="single-services">
+								<span class="lnr  fa fa-thumbs-o-up"></span>
+								<h4>Review</h4>
 								<p>
-									Contact us in business hours, 7 days a week
+									We Aim to be Number One Mobile Recycling Service In Uk.
 								</p>
-							</div>	
+							</div>
 						</div>
 					<div class="col-lg-6 col-md-6">
 							<div  class="single-services">
@@ -517,7 +549,7 @@ while($count=mysqli_fetch_array($counter))
 								<p>
 									Over £350 Million Paid Out to Over 6 Million Happy Customers on Different Platforms
 								</p>
-							</div>	
+							</div>
 						</div>
 						</div>
 						<div class="row">
@@ -528,47 +560,28 @@ while($count=mysqli_fetch_array($counter))
 								<p>
 									Numbers of Visitor On Our Websites
 								</p>
-							</div>	
+							</div>
 						</div>
-				
-					
+
+
 							<div class="col-lg-6 col-md-6">
 							<div  class="single-services" >
 								<span class="lnr fa fa-money" ></span>
-								<h4>Fast Same Day Payment</h4>
+								<h4>Fast Payment with in 24 Hours</h4>
 								<p>
-									*Subject to the Quality Assessment having been completed before 2pm – Most are!
+									*Subject to the Quality Assessment having been completed with in 24 Hours – Most are!
 								</p>
 							</div>
 						</div>
 						</div>
-						<div class="row">
-						<div class="col-lg-6 col-md-6">
-							<div  class="single-services" >
-								<span style="color:black;font-weight:600;font-size:30px;" class="lnr fa fa-gbp"></span>
-								<h4>Price</h4>
-								<p>
-									Tech Price Promise: Get the first price or your items back for FREE
-								</p>
-							</div>	
-						</div>
-							<div class="col-lg-6 col-md-6">
-							<div  class="single-services">
-								<span class="lnr  fa fa-thumbs-o-up"></span>
-								<h4>Review</h4>
-								<p>
-									We Aim to be Number One Mobile Recycling Service In Uk.
-								</p>
-							</div>
-						</div>
-					</div>
+
 						</div>
 					</div>
 			</section>
 		<!-- Page Conttent -->
 
 		<!-- Banners Area -->
-		
+
 
 		<!--// Banners Area -->
 <!-- Start portfolio-area Area -->
@@ -577,50 +590,116 @@ while($count=mysqli_fetch_array($counter))
 		            <div class="row d-flex justify-content-center">
 		                <div class="menu-content pb-70 col-lg-12">
 		                	<?php $home_obj->HomeSearch(); ?>
-		                   
+
 		                </div>
 		            </div>
-                    
-                    
-                    
+
+
+
                     <div class="filters-content">
                         <div class="title text-center">
 
-		                        <h2 style="color:#17a697!important;margin-bottom:4%;" class="mb-10">Our Featured Products</h2>
-		                       
+		                        <h2 style="color:#13564f!important;margin-bottom:3%;margin-top:3%;" class="mb-10">Our Featured Products</h2>
+
 		                    </div>
                         <div class="row grid">
-                        	<?php
-                        	$sql=mysqli_query($con,"SELECT * from wr_home_featured_items");
-                        	while($row=mysqli_fetch_array($sql))
-                        	{
-?>
+
                             <div class="single-portfolio col-sm-4 all vector">
-                            	<div style="cursor:pointer;" class="relative" onclick="document.location='<?php echo $row['page_link']; ?>'">
+                            	<div style="cursor:pointer;" class="relative" onclick="document.location='brands.php?p=phones'">
 	                            	<div class="thumb">
-	                            		<div class="overlay overlay-bg"></div>
-	                            		 <img class="image img-fluid" src="<?php echo 'uploads/'.$row['img_path']; ?>" alt="">
+	                            		<div class=""></div>
+	                            		 <img class="image img-fluid" src="uploads/iphone.webp" alt="Phones" height="100%" width="100%">
 	                            	</div>
-									<a href="<?php echo $row['page_link']; ?>" >	
-									  <div class="middle">
-									    <div class="text align-self-center d-flex"><img src="home/img/preview.png" alt="preview"></div>
-									  </div>
-								</a>                              		
+									<a href="brands.php?p=phones" >
+
+								</a>
                             	</div>
 								<div class="p-inner">
-								    <a href="<?php echo $row['page_link']; ?>" class="ho-button ho-button-fullwidth ho-button-sm" style="padding: 6px 5px; font-size: 12px;"><span><?php echo $row['p_name']; ?></span></a>
-									
-								</div>					                               
+								    <a href="brands.php?p=phones" class="ho-button ho-button-fullwidth ho-button-sm" style="padding: 6px 5px; font-size: 12px;"><span>Phones</span></a>
+
+								</div>
                             </div>
-                            <?php
-                        }
-                            ?>
+                            <div class="single-portfolio col-sm-4 all vector">
+                            	<div style="cursor:pointer;" class="relative" onclick="document.location='brands.php?p=tablets'">
+	                            	<div class="thumb">
+	                            		<div class=""></div>
+	                            		 <img class="image img-fluid" src="uploads/tabs.webp" alt="Tablets" height="100%" width="100%">
+	                            	</div>
+									<a href="brands.php?p=tablets" >
+
+								</a>
+                            	</div>
+								<div class="p-inner">
+								    <a href="brands.php?p=tablets" class="ho-button ho-button-fullwidth ho-button-sm" style="padding: 6px 5px; font-size: 12px;"><span>Tablets</span></a>
+
+								</div>
+                            </div>
+                            <div class="single-portfolio col-sm-4 all vector">
+                            	<div style="cursor:pointer;" class="relative" onclick="document.location='brands.php?p=laptops'">
+	                            	<div class="thumb">
+	                            		<div class=""></div>
+	                            		 <img class="image img-fluid" src="uploads/macbook.webp" alt="Laptops & MacBooks" height="100%" width="100%">
+	                            	</div>
+									<a href="brands.php?p=laptops" >
+
+								</a>
+                            	</div>
+								<div class="p-inner">
+								    <a href="brands.php?p=laptops" class="ho-button ho-button-fullwidth ho-button-sm" style="padding: 6px 5px; font-size: 12px;"><span>Laptops & MacBooks</span></a>
+
+								</div>
+                            </div>
+                            <div class="single-portfolio col-sm-4 all vector">
+                            	<div style="cursor:pointer;" class="relative" onclick="document.location='brands.php?p=Game-console'">
+	                            	<div class="thumb">
+	                            		<div class=""></div>
+	                            		 <img class="image img-fluid" src="uploads/1.webp" alt="Game-console" height="100%" width="100%">
+	                            	</div>
+									<a href="brands.php?p=Game-console" >
+
+								</a>
+                            	</div>
+								<div class="p-inner">
+								    <a href="brands.php?p=Game-console" class="ho-button ho-button-fullwidth ho-button-sm" style="padding: 6px 5px; font-size: 12px;"><span>Game console</span></a>
+
+								</div>
+                            </div>
+                            <div class="single-portfolio col-sm-4 all vector">
+                            	<div style="cursor:pointer;" class="relative" onclick="document.location='brands.php?p=smart-watches'">
+	                            	<div class="thumb">
+	                            		<div class=""></div>
+	                            		 <img class="image img-fluid" src="uploads/watch.webp" alt="Phones" height="100%" width="100%">
+	                            	</div>
+									<a href="brands.php?p=smart-watches" >
+
+								</a>
+                            	</div>
+								<div class="p-inner">
+								    <a href="brands.php?p=smart-watches" class="ho-button ho-button-fullwidth ho-button-sm" style="padding: 6px 5px; font-size: 12px;"><span>Smart Watch</span></a>
+
+								</div>
+                            </div>
+                            <div class="single-portfolio col-sm-4 all vector">
+                            	<div style="cursor:pointer;" class="relative" onclick="document.location='products.php?b=Apple&bid=22&pc=11'">
+	                            	<div class="thumb">
+	                            		<div class=""></div>
+	                            		 <img class="image img-fluid" src="uploads/2.webp" alt="Phones" height="100%" width="100%">
+	                            	</div>
+									<a href="products.php?b=Apple&bid=22&pc=11" >
+
+								</a>
+                            	</div>
+								<div class="p-inner">
+								    <a href="products.php?b=Apple&bid=22&pc=11" class="ho-button ho-button-fullwidth ho-button-sm" style="padding: 6px 5px; font-size: 12px;"><span>Airpodsss</span></a>
+
+								</div>
+                            </div>
                           </div>
-                          </div>  
+                          </div>
                 </div>
             </section>
             <!-- End portfolio-area Area -->
-            
+
 		<main class="page-content">
 
 			<!-- Features Area -->
@@ -635,7 +714,7 @@ while($count=mysqli_fetch_array($counter))
 								<h5>Get your Phone Value</h5>
 								<p>We provide best value in market for you.</p>
 							</div>
-							
+
 						</div>
 						<!--// Single Feature -->
 
@@ -646,7 +725,7 @@ while($count=mysqli_fetch_array($counter))
 								<h5>Send your Phone</h5>
 								<p>Send your phone to us for approval.</p>
 							</div>
-							
+
 						</div>
 						<!--// Single Feature -->
 
@@ -671,12 +750,12 @@ while($count=mysqli_fetch_array($counter))
 						<!--// Single Feature -->
 
 					</div>
-				
+
 					    <div>
 					<h2 style="font-size:23px;text-align:center;font-weight:800;margin-top:3%;">What our Valuable Customers Think About Us!</h2>
-					
+
 					</div>
-					<div class="row">
+				<!--	<div class="row">
 		<div class="MultiCarousel" data-items="1,2,3,4" data-slide="3" id="MultiCarousel"  data-interval="3000">
             <div class="MultiCarousel-inner">
                 <div class="item">
@@ -724,7 +803,7 @@ while($count=mysqli_fetch_array($counter))
                        <img src="images/Recycle-Pro-Review-9.webp" alt="Recycle-Pro-Review-9">
                     </div>
                 </div>
-                
+
                  <div class="item">
                     <div class="pad15">
                        <img src="images/Recycle-Pro-Review-10.webp" alt="Recycle-Pro-Review-10">
@@ -760,7 +839,7 @@ while($count=mysqli_fetch_array($counter))
                        <img src="images/Recycle-Pro-Review-16.webp" alt="Recycle-Pro-Review-16">
                     </div>
                 </div>
-               
+
                 <div class="item">
                     <div class="pad15">
                        <img src="images/Recycle-Pro-Review-17.webp" alt="Recycle-Pro-Review-17">
@@ -785,16 +864,16 @@ while($count=mysqli_fetch_array($counter))
                 <button class="btn btn-primary leftLst"><</button>
             <button class="btn btn-primary rightLst">></button>
                 </div>
-                </div>
+                </div>-->
 				</div>
 			</div>
-			
-			 
+
+
 			<!--// Features Area -->
-			
+
 			<?php $home_obj->HomeInfoBox(); ?>
 
-		
+
 
 
 			<!-- Newsletter Area -->
@@ -815,28 +894,12 @@ while($count=mysqli_fetch_array($counter))
 	</script>
 	<!-- Js Files -->
 	<script src="js/vendor/modernizr-3.6.0.min.js"></script>
-	<script src="js/vendor/jquery-3.3.1.min.js"></script>
-	<script src="js/popper.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/plugins.js"></script>
-	<script src="js/main.js"></script>
+    <script src="js/vendor/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
 	<script src="js/typeahead.js"></script>
-		<script src="home/js/popper.min.js"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>			
-  			<script src="home/js/easing.min.js"></script>			
-			<script src="home/js/hoverIntent.js"></script>
-			<script src="home/js/superfish.min.js"></script>	
-			<script src="home/js/jquery.ajaxchimp.min.js"></script>
-			<script src="home/js/jquery.magnific-popup.min.js"></script>	
-    		<script src="home/js/jquery.tabs.min.js"></script>						
-			<script src="home/js/jquery.nice-select.min.js"></script>	
-            <script src="home/js/isotope.pkgd.min.js"></script>			
-			<script src="home/js/waypoints.min.js"></script>
-			<script src="home/js/jquery.counterup.min.js"></script>
-			<script src="home/js/simple-skillbar.js"></script>							
-			<script src="home/js/owl.carousel.min.js"></script>							
-			<script src="home/js/mail-script.js"></script>	
-			<script src="home/js/main.js"></script>	
 	
 	<script>
 		$(document).ready(function () {
@@ -845,22 +908,22 @@ while($count=mysqli_fetch_array($counter))
 				  var querys = $('#mob-search-field').val();
 				   if(querys == "iphone 13" || querys == "iphone 12" || querys == "iphone 11" || querys == "iphone 13 pro" || querys == "iphone 12 pro" || querys == "iphone 11 pro" || querys == "iphone 13 pro max" || querys == "iphone 12 pro max" || querys == "iphone 11 pro max")
 				    {
-				         var query = querys.split(' ').join(' ');    
+				         var query = querys.split(' ').join(' ');
 				    }
 				     if($.trim($('#mob-search-field').val()) == ''){
-				     
+
 				         alert();
-				    var query = querys.split(' ').join(' '); 
+				    var query = querys.split(' ').join(' ');
 				    $('.divcontact').attr("style","display: none !important;");
 				    }
 				    else
 				    {
-				    var query = querys.split(' ').join(' '); 
+				    var query = querys.split(' ').join(' ');
 				      }
 				 console.log(query)
 					$.ajax({
 						url: "search-info.php",
-						data: 'query=' + query,            
+						data: 'query=' + query,
 						dataType: "json",
 						type: "POST",
 						success: function (data) {
@@ -875,16 +938,16 @@ while($count=mysqli_fetch_array($counter))
 		});
 		$("#mob-search-field").keyup(function(e){
    if($.trim($('#mob-search-field').val()) == ''){
-				     
+
 				        $('.divcontact').attr("style","display: none !important;");
 				    }
 				    else if($.trim($('#mob-search-field').val()) != ''){
-				     
+
 				        $('.divcontact').attr("style","display: block !important;");
 				    }
 });
 	</script>
-	
+
 	<script>
 		$(document).on('change','#mob-search-field',function() {
 			var serval = $('#mob-search-field').val();
@@ -907,7 +970,7 @@ while($count=mysqli_fetch_array($counter))
 <script>
 
 $('#mob-search-field').keyup(function(){
-  
+
   if($(this).val()){
     $(this).parent().find('ul').addClass("hrg");
   }else{
@@ -916,7 +979,7 @@ $('#mob-search-field').keyup(function(){
 });
 
 	</script>
-	<script> 
+	<!--<script>
 var slides = document.querySelectorAll('#slides .slide');
 var currentSlide = 0;
 var slideInterval = setInterval(nextSlide,2000);
@@ -946,7 +1009,7 @@ pauseButton.onclick = function(){
     if(playing){ pauseSlideshow(); }
     else{ playSlideshow(); }
 };
-</script>
+</script>-->
 <script>
 	$(document).ready(function() {
     var isshow = localStorage.getItem('isshow');
@@ -1073,7 +1136,7 @@ document.addEventListener('touchmove', function(event) {
 
 });
 	</script>
-	
+
 	<?php echo $layout_obj->getBasicVals('Footer_script_code','option_value'); ?>
 </body>
 </html>

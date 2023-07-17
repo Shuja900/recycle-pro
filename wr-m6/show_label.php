@@ -82,7 +82,7 @@ extract($_REQUEST);
                            ?>
                                        <tr class="even pointer odd pointer">
                                           <td class="a-center "><?php echo $row['id']; ?></td>
-                                          <td class=" "><embed src="https://www.recyclepro.co.uk/uploads/<?php echo $row['label']; ?>" frameborder="0" width="100px" height="50px"></td>
+                                          <td class=" "><embed src="uploads/<?php echo $row['label']; ?>" frameborder="0" width="100px" height="50px"></td>
                                            <td class="a-center "><?php echo $row['label']; ?></td>
                                           <td class=" "><?php echo $row['date']; ?></td>
                                           <td class=" last"><a href="del_label.php?id=<?php echo $row['id']; ?>">Delete</a>  

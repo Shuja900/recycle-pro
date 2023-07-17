@@ -71,7 +71,7 @@ extract($_REQUEST);
                   
                      <header class="clearfix">
      <div id="logo">
-        <img src="https://www.recyclepro.co.uk/img/m6-logo-1.png">
+        <img src="img/m6-logo-1.png">
       </div>
       <div id="company">
         <h2 class="name">Recycle Pro</h2>

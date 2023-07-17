@@ -9,7 +9,7 @@ $user_obj = new UserClass();
 extract($_REQUEST);
 ?>
 <!doctype html>
-<html class="no-js" lang="zxx">
+<html class="no-js" lang="en-gb">
 <head>
      <style>
         body{

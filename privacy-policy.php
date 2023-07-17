@@ -11,13 +11,27 @@ $pagename='about';
 ?>
 <!doctype html>
 <html class="no-js" lang="en-gb">
-
+<?php
+include('Db.php');
+$urs= $protocol .$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$con = mysqli_connect("localhost", "recycleproco_sohaib", "123@Screw@@", "recycleproco_experiment") or die("Error " . mysqli_error($con));
+$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+$url= $protocol .$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$sql="select * from url where url='$url' ";
+            $record=mysqli_query($con,$sql);
+           while($row=mysqli_fetch_array($record))
+            {
+            	$title=$row['title'];
+            	$keywords=$row['keywords'];
+            	$description=$row['description'];
+            }
+ ?>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title><?php echo $page_obj->getPageData('title',$p); ?></title>
-    <meta name="description" content="<?php echo $page_obj->getPageData('metadescription',$p); ?>">
-    <meta name="keywords" content="<?php echo $page_obj->getPageData('keywords',$p); ?>">
+    <title><?php echo $title; ?></title>
+    <meta name="description" content="<?php echo $description;  ?>">
+    <meta name="keywords" content="<?php echo $keywords; ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="images/icon.png">
@@ -28,7 +42,7 @@ $pagename='about';
     <!-- Plugins -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/plugins.css">
-<link rel="canonical" href="https://www.recyclepro.co.uk/privacy-policy.php"/>
+<link rel="canonical" href="privacy-policy.php"/>
 
     <!-- Style Css -->
     <link rel="stylesheet" href="style.css">

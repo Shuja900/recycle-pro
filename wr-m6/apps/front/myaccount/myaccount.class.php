@@ -28,28 +28,28 @@ background-color:#eeeeee;
                             	</div>
                             	<div  style="text-align:-webkit-center;cursor: pointer;" class="col-lg-2">
                             	<div class="act" id="b1" style="border:2px solid grey; padding:10%;height:148px;">
-									<img style="width:60px;height:60px;margin-bottom:10px;" src="charities/dashboard.png" >
+									<img style="width:60px;height:60px;margin-bottom:10px;" src="charities/dashboard.webp" >
 								</br>
 									<a id="b1" style="font-size:15px;font-weight:600;color:grey;" >Dashboard</a>
 									</div>
 								</div>
 								<div style="text-align:-webkit-center;cursor: pointer;" class="col-lg-2">
 									<div id="b2" style="border:2px solid grey; padding:10%;height:148px;">
-									<img style="width:60px;height:60px;margin-bottom:10px;" src="charities/order.png" >
+									<img style="width:60px;height:60px;margin-bottom:10px;" src="charities/order.webp" >
 									</br>
 									<a id="b2" style="font-size:15px;font-weight:600;color:grey;" >Orders Details</a>
 									</div>
 								</div>
 								<div  style="text-align:-webkit-center;cursor: pointer;" class="col-lg-2">
 									<div id="b3" style="border:2px solid grey; padding:10%;height:148px;">
-									<img style="width:60px;height:60px;margin-bottom:10px;" src="charities/bank.png" >
+									<img style="width:60px;height:60px;margin-bottom:10px;" src="charities/bank.webp" >
 									</br>
 									<a id="b3" style="font-size:15px;font-weight:600;color:grey;" >Bank Details</a>
 									</div>
 								</div>
 								<div  style="text-align:-webkit-center;cursor: pointer;" class="col-lg-2">
 									<div id="b4" style="border:2px solid grey; padding:10%;height:148px;">
-									<img style="width:60px;height:60px;margin-bottom:10px;" src="charities/users.png" >
+									<img style="width:60px;height:60px;margin-bottom:10px;" src="charities/users.webp" >
 									</br>
 									  <a id="b4"style="font-size:15px;font-weight:600;color:grey;" >Personal Details
                                         </a>
@@ -57,14 +57,14 @@ background-color:#eeeeee;
 								</div>
 								<div  style="text-align:-webkit-center;cursor: pointer;" class="col-lg-2">
 									<div id="b5" style="border:2px solid grey; padding:10%;height:148px;">
-									<img style="width:60px;height:60px;margin-bottom:10px;" src="charities/login.png" >
+									<img style="width:60px;height:60px;margin-bottom:10px;" src="charities/login.webp" >
 									</br>
 									<a id="b5" style="font-size:15px;font-weight:600;color:grey;line-height:18px;" >Password Protected</a>
 									</div>
 								</div>
 								<div  style="text-align:-webkit-center;cursor: pointer;" class="col-lg-2">
 									<div id="b6" style="border:2px solid grey; padding:10%;height:148px;">
-									<img style="width:60px;height:60px;margin-bottom:10px;" src="charities/login.png" >
+									<img style="width:60px;height:60px;margin-bottom:10px;" src="charities/login.webp" >
 									</br>
 									<a id="b6" style="font-size:15px;font-weight:600;color:grey;line-height:18px;" >Refrral Email</a>
 									</div>
@@ -214,7 +214,7 @@ background-color:#eeeeee;
 											foreach ($record_t as $row_t)
 											{
 											?>
-											<embed src="https://www.recyclepro.co.uk/uploads/<?php echo $row_t['label']; ?>" frameborder="0" width="100%" height="400px">
+											<embed src="uploads/<?php echo $row_t['label']; ?>" frameborder="0" width="100%" height="400px">
        <?php
         }
        ?>
@@ -315,7 +315,7 @@ background-color:#eeeeee;
                 <div id="logo">
 
               
-              <img  src="https://www.recyclepro.co.uk/img/m6-logo-1.png" alt="logo" />
+              <img  src="img/m6-logo-1.png" alt="logo" />
             </div>
 		
 		

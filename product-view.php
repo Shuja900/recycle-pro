@@ -1,22 +1,35 @@
 <?php
 
-if(isset($_GET['pid']))
+if(isset($_GET['name']) || isset($_GET['pid']))
 {
 include('Db.php');
 $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 $url= $protocol .$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$sqy = "select productname from wr_product where id='".$_GET['pid']."' ";
+$sqy = "select productname from wr_product where id='".$_GET['pid']."' OR productname='".str_replace('-',' ',$_GET['name'])."'";
 $rec=mysqli_query($con,$sqy);
 $ros=mysqli_fetch_array($rec);
 $names=str_replace(' ','-',$ros['productname']);
+
 $urz=$url.'&name='.$names;
 $g=str_replace('&name='.$names.''.'&name='.$names,'&name='.$names,$urz);
-$uki="https://www.recyclepro.co.uk/product-view?name=".$names."&pid=".$_GET['pid']."&vid=".$_GET['vid']."";
-if($url=="https://www.recyclepro.co.uk/product-view.php?pid=".$_GET['pid']."&vid=".$_GET['vid']."" || $url=="https://www.recyclepro.co.uk/product-view?pid=".$_GET['pid']."&vid=".$_GET['vid']."")
+$uki="product-view?name=".$names."&pid=".$_GET['pid']."&vid=".$_GET['vid']."";
+if($url=="product-view.php?pid=".$_GET['pid']."&vid=".$_GET['vid']."" || $url=="product-view?pid=".$_GET['pid']."&vid=".$_GET['vid']."" || $url=="product-view?pid=".$_GET['pid']."&vid=".$_GET['vid']."&name=".$names.""|| $url=="product-view.php?pid=".$_GET['pid']."&vid=".$_GET['vid']."&name=".$names."" )
 {
-  $yourURL="https://www.recyclepro.co.uk/product-view?name=".$names."&pid=".$_GET['pid']."&vid=".$_GET['vid']."";
+  $yourURL="product-view?name=".$names."&pid=".$_GET['pid']."&vid=".$_GET['vid']."";
     header("location: $yourURL", true, 301);
 }
+else if($url=="product-view?name=".$names."")
+{
+  $yourURL="https://www.recyclepro.co.uk";
+    header("location: $yourURL", true, 301);
+}
+else if(empty($names))
+{
+ header("HTTP/1.1 410 Gone");
+exit;
+}
+
+
 }
 require_once("wr-m6/wrbasic/config.inc.php");
 require_once('wr-m6/apps/front/layout/layout.class.php');
@@ -39,6 +52,9 @@ extract($_REQUEST);
 .MultiCarousel .MultiCarousel-inner {
 	transition: 1s ease all;
 	float: left;
+}
+.pdetails-singleimage.border-blue-wr {
+    text-align: center;
 }
 .MultiCarousel .MultiCarousel-inner .item {
 	float: left;
@@ -138,122 +154,7 @@ extract($_REQUEST);
 				?>
             </div>
             <!--// Product Details Area -->
-<div class="container">
-<div class="row">
-		<div class="MultiCarousel" data-items="1,2,3,4" data-slide="3" id="MultiCarousel"  data-interval="3000">
-            <div class="MultiCarousel-inner">
-                <div class="item">
-                    <div class="pad15">
-                       <img src="images/Recycle-Pro-Review-1.webp" alt="">
-                    </div>
-                </div>
-                 <div class="item">
-                    <div class="pad15">
-                       <img src="images/Recycle-Pro-Review-2.webp" alt="">
-                    </div>
-                </div>
-                 <div class="item">
-                    <div class="pad15">
-                       <img src="images/Recycle-Pro-Review-3.webp" alt="">
-                    </div>
-                </div>
-                 <div class="item">
-                    <div class="pad15">
-                       <img src="images/Recycle-Pro-Review-4.webp" alt="">
-                    </div>
-                </div>
-                 <div class="item">
-                    <div class="pad15">
-                       <img src="images/Recycle-Pro-Review-5.webp" alt="">
-                    </div>
-                </div>
-                 <div class="item">
-                    <div class="pad15">
-                       <img src="images/Recycle-Pro-Review-6.webp" alt="">
-                    </div>
-                </div>
-                 <div class="item">
-                    <div class="pad15">
-                       <img src="images/Recycle-Pro-Review-7.webp" alt="">
-                    </div>
-                </div>
-                 <div class="item">
-                    <div class="pad15">
-                       <img src="images/Recycle-Pro-Review-8.webp" alt="">
-                    </div>
-                </div>
-                 <div class="item">
-                    <div class="pad15">
-                       <img src="images/Recycle-Pro-Review-9.webp" alt="">
-                    </div>
-                </div>
-                
-                 <div class="item">
-                    <div class="pad15">
-                       <img src="images/Recycle-Pro-Review-10.webp" alt="">
-                    </div>
-                </div>
-                 <div class="item">
-                    <div class="pad15">
-                       <img src="images/Recycle-Pro-Review-11.webp" alt="">
-                    </div>
-                </div>
-                 <div class="item">
-                    <div class="pad15">
-                       <img src="images/Recycle-Pro-Review-12.webp" alt="">
-                    </div>
-                </div>
-                 <div class="item">
-                    <div class="pad15">
-                       <img src="images/Recycle-Pro-Review-13.webp" alt="">
-                    </div>
-                </div>
-                 <div class="item">
-                    <div class="pad15">
-                       <img src="images/Recycle-Pro-Review-14.webp" alt="">
-                    </div>
-                </div>
-                 <div class="item">
-                    <div class="pad15">
-                       <img src="images/Recycle-Pro-Review-15.webp" alt="">
-                    </div>
-                </div>
-                 <div class="item">
-                    <div class="pad15">
-                       <img src="images/Recycle-Pro-Review-16.webp" alt="">
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="pad15">
-                       <img src="images/Recycle-Pro-Review-16.webp" alt="">
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="pad15">
-                       <img src="images/Recycle-Pro-Review-17.webp" alt="">
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="pad15">
-                       <img src="images/Recycle-Pro-Review-18.webp" alt="">
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="pad15">
-                       <img src="images/Recycle-Pro-Review-19.webp" alt="">
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="pad15">
-                       <img src="images/Recycle-Pro-Review-20.webp" alt="">
-                    </div>
-                </div>
-                </div>
-                <button class="btn btn-primary leftLst"><</button>
-            <button class="btn btn-primary rightLst">></button>
-                </div>
-                </div>
-             </div>
+
             <!-- Newsletter Area -->
             <?php $layout_obj->NewsLetterArea(); ?>
             <!--// Newsletter Area -->

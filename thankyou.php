@@ -3,6 +3,13 @@ require_once("wr-m6/wrbasic/config.inc.php");
 require_once("wr-m6/apps/front/class/config.front.php");
 require_once('wr-m6/apps/front/layout/layout.class.php');
 require_once('wr-m6/apps/front/home/homepage.class.php');
+$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+$url= $protocol .$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+if($url=="thankyou")
+{
+  $yourURL="thankyou.php";
+    header("location: $yourURL", true, 301);
+}
 $home_obj = new HomePage(); 
 $layout_obj = new LayoutClass();
 extract($_REQUEST);
@@ -310,6 +317,7 @@ a:hover {
       'transaction_id': ''
   });
 </script>
+<script>(function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"136027522"};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","//bat.bing.com/bat.js","uetq");</script>
 <?php $layout_obj->TitleGeneral(); ?>
 	<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet"> 
 	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">

@@ -49,7 +49,7 @@ extract($_REQUEST);
             </div>
             <div class="x_content">
                   <p>Mannualy  <code>Add Label</code>.</p>
-            <form class="form-horizontal form-label-left" action="https://www.recyclepro.co.uk/addlabel.php" method="post" enctype="multipart/form-data" >
+            <form class="form-horizontal form-label-left" action="addlabel.php" method="post" enctype="multipart/form-data" >
                                 
                                  
                                  <?php

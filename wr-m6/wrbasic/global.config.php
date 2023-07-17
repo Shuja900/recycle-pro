@@ -33,7 +33,7 @@ define("WR_NEWSLETTER","wr_newsletter");
 // Base File Directory ///
 define("BASE_FILRDIR","wr-m6/uploads/");
 //Have to be turned off
-ini_set('display_errors', false);
+ini_set('display_errors', true);
 //error_reporting(E_ALL ^ E_NOTICE);
 //View in logs! not on pages!
 error_reporting(-1);

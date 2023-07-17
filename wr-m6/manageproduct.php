@@ -25,6 +25,8 @@ extract($_REQUEST);
       <!-- Custom Theme Style -->
       <link href="assets/css/custom.min.css" rel="stylesheet">
       <script src="ckeditor/ckeditor.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      
       <link rel="stylesheet" href="ckeditor/toolbarconfigurator/lib/codemirror/neo.css">
    </head>
    <body class="nav-md dark-left-side">
@@ -80,6 +82,25 @@ extract($_REQUEST);
          </div>
       </div>
       <!-- jQuery -->
+       <script>
+ $(document).ready(function(){
+$('#searchproducts').click(function(){
+    var track = $("#track").val(); 
+    $.ajax({
+        url:"searchproducts.php",
+        method: "POST",
+        data: {track:track},
+        success: function(data){
+            console.log(data);
+      $("#responsecontainer").html(data);
+      $('#pdfmodel').modal('show');
+        }
+    });
+});
+});
+
+
+</script>
       <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
       <!-- Bootstrap -->
       <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>

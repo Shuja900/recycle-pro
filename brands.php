@@ -7,7 +7,7 @@ $brand_obj = new BrandsClass();
 extract($_REQUEST);
 ?>
 <!doctype html>
-<html class="no-js" lang="zxx">
+<html class="no-js" lang="en-gb">
 
 <head>
     <meta charset="utf-8">

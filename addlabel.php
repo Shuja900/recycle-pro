@@ -1,11 +1,20 @@
 <?php
 include('Db.php');
+
+
+
+function getStringBetween($str,$from,$to)
+{
+    $sub = substr($str, strpos($str,$from)+strlen($from),strlen($str));
+    return substr($sub,0,strpos($sub,$to));
+}
+
 for($i=0; $i < count($_FILES['image']['name']); $i++){
  $fltmp= $_FILES['image']['tmp_name'][$i];
         if($fltmp=='')
         {
         $message = '<div class="alert alert-success">Your Data Has Been Enter successfully </div>';
-        header("location:https://www.recyclepro.co.uk/wr-m6/label.php?success=true&message='.$message");
+        header("location:wr-m6/label.php?success=true&message='.$message");
         }
         else
         {
@@ -44,8 +53,11 @@ for($i=0; $i < count($_FILES['image']['name']); $i++){
  
  
 // Display text content 
-
- $stl=mysqli_query($con,"insert into pdflabel(label,pdf) values('$fileName','$pdfText')");
+$from = "#";
+$to = "#";
+$code=getStringBetween($pdfText,$from,$to);
+$codez=str_replace(' ','',$code);
+ $stl=mysqli_query($con,"insert into pdflabel(label,pdf,code) values('$fileName','$pdfText','$codez')");
  $fname= $_FILES['image']['name'][$i];
         $targetDir = "uploads/";
         $targetFilePath = $targetDir . $fname;

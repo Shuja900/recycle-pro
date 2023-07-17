@@ -47,13 +47,19 @@ switch($index)
 		require_once('apps/wrback/products/orders.class.php');
 		require_once("wrbasic/class.phpmailer.php");
 		$ordr_obj = new OrderClass();
-		$ordr_obj->UpdateProStatus($order_id,$order_status,$prc,$shipping_status,$payment_status,$rprice,$detail,$dte,$user_id);
+		$ordr_obj->UpdateProStatus($order_id,$order_status,$prc,$shipping_status,$payment_status,$rprice,$detail,$dte,$user_id,$rev);
 	break;
 		case 'updateSta':
 		require_once('apps/wrback/products/ord_class.php');
 		require_once("wrbasic/class.phpmailer.php");
 		$ordr_obj = new OrderClass();
-		$ordr_obj->UpdateProStatus($order_id,$order_status,$prc,$shipping_status,$payment_status,$rprice,$detail,$dte,$user_id);
+		$ordr_obj->UpdateProStatus($order_id,$order_status,$prc,$shipping_status,$payment_status,$rprice,$detail,$dte,$user_id,$rev);
+	break;
+	case 'updateStasel':
+		require_once('apps/wrback/products/sell_class.php');
+		require_once("wrbasic/class.phpmailer.php");
+		$ordr_obj = new OrderClass();
+		$ordr_obj->UpdateProStatus($order_id,$order_status,$prc,$shipping_status,$payment_status,$rprice,$detail,$dte,$user_id,$rev);
 	break;
 	default: echo '';
 	break;

@@ -33,7 +33,7 @@ function ShowAll(){
                                     <tbody>
 									<?php 
 										$x=1;
-										$sql = "select * from ".WR_USER." where 1 order by id desc";
+										$sql = "select * from ".WR_USER."  order by id desc Limit 1000";
 										$record = $this->db->fetch_query($sql,$this->db->pdo_open());
 										foreach ($record as $arr)
 										{

@@ -28,7 +28,7 @@ extract($_REQUEST);
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
       <script src="ckeditor/ckeditor.js"></script>
       <link rel="stylesheet" href="ckeditor/toolbarconfigurator/lib/codemirror/neo.css">
-     
+         
    </head>
    <body class="nav-md dark-left-side">
       <?php //$layout_obj->PreLoader(); ?>

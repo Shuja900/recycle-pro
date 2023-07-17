@@ -12,8 +12,9 @@ return $record[$valtype];
 function TitleGeneral(){
 ?>
 <?php
+$protocol ="";
 $urs= $protocol .$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$con = mysqli_connect("localhost", "recyclepro_co_uk", "L3eEdkG4zYhce5DTfgewteW4", "recyclepro_co_uk") or die("Error " . mysqli_error($con));
+$con = mysqli_connect("localhost", "recycleproco_sohaib", "123@Screw@@", "recycleproco_experiment") or die("Error " . mysqli_error($con));
 $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 $url= $protocol .$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 $sql="select * from url where url='$url' ";
@@ -30,13 +31,13 @@ $sql="select * from url where url='$url' ";
 <meta name="description" content="<?php echo $description;  ?>">
 <meta name="keywords" content="<?php echo $keywords;  ?>">
 <link rel="canonical" href="<?php echo $url;?>"/>
-<meta property="og:image" content="https://www.recyclepro.co.uk/img/RP-Logo.webp" />
+<meta property="og:image" content="img/m6-logo-1.webp" />
 <meta property="og:description" content="Recyclepro is a web platform which provides peer-to-peer rubbish collection services on-demand or by subscription. Sell your old gadgets, phones, watches for cash online." />
 <meta property="og:type" content="article" />
 <meta property="og:locale" content="en-GB" />
 <meta property="og:site_name" content="recyclepro" />
 <meta property="og:title" content="Recycle pro - Sell old Phone | Cash for old phones| Sell Old Tablets" />
-<meta property="og:url" content="https://www.recyclepro.co.uk/" />
+<meta property="og:url" content="" />
 <meta property="twitter:partner" content="OG" />
 <meta property="twitter:card" content="summary" />
 <meta property="twitter:title" content="<?php echo $title;?>" />
@@ -46,21 +47,18 @@ $sql="select * from url where url='$url' ";
 <meta property="profile:last_name" content="Smith" />
 <meta property="profile:username" content="Roger" />
  <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="google-site-verification" content="fzo6XWs1WEp5039DYKYZkt0hIpADPMzCfKDOI42xGeY" />
+    <meta name="google-site-verification" content="p_owfaSYTD8SpFiGr8VjMaEUyQnVd3m3latxVLW--Dc" />
     <style>
     @media only screen and (max-width: 690px) {
         footer.footer.bg-white {
     font-size: 18px;
 }
 }
-.tawk-bubble-container {
-    cursor: pointer;
-    position: relative;
-    height: 100%;
-    display:none;
-}
-.select-language.mob.zoom {
-    margin-left: 50%;
+
+.socialicons-radial ul li a:hover {
+    background: #27a9e0;
+    border-color: #2091c1;
+    color: #000 !important;
 }
     </style>
 <?php 
@@ -80,7 +78,7 @@ function pageHead($pgname=''){
 							<?php if($_SESSION['userid']){ ?>
 							<div class="header-langcurr">
 								<div class="select-currency">
-									<i><img style="width: 39px;height: 39px;border-radius: 50%;" src="images/prof_image.png" ></i>
+									<i><img style="width: 39px;height: 39px;border-radius: 50%;" src="images/user_image.webp" ></i>
 									<a style="color:white !important;" class="select-currency-current text-primary-wr" href="myaccount.php">Hi <?php echo $_SESSION['username']; ?>!</a>
 								</div>
 								
@@ -89,7 +87,7 @@ function pageHead($pgname=''){
 									<a style="color:white !important;" class="select-language-current" href="logout.php">Logout</a>
 								</div>
 								<div  class="select-language mob zoom">
-								<a class="header-carticon" href="cart.php" onclick="window.location='cart.php'"><img src="images/cart.png" width="55px" height="55px"><span class="count"><?php echo count($_SESSION['products']); ?></span></a>
+								<a class="header-carticon" href="cart.php" onclick="window.location='cart.php'"><img src="images/cart.webp" width="55px" height="55px"><span class="count"><?php echo count($_SESSION['products']); ?></span></a>
 								</div>
 							</div>
 							<?php 
@@ -107,7 +105,7 @@ function pageHead($pgname=''){
 									<a style="color:white !important;" class="select-language-current" href="register.php">Register</a>
 								</div>
 								<div  class="select-language mob zoom">
-								<a class="header-carticon zoom" href="cart.php" onclick="window.location='cart.php'"><i class="lnr fa fa-cart-plus"></i><span class="count"><?php echo count($_SESSION['products']); ?></span></a>
+								<a class="header-carticon zoom" href="cart.php" onclick="window.location='cart.php'"><i class="lnr fa fa-cart-plus"></i><span class="count"><?php echo ($_SESSION['products']); ?></span></a>
 								</div>
 							</div>
 							<?php } ?>
@@ -122,13 +120,15 @@ function pageHead($pgname=''){
 					<div class="row align-items-center">
 						<div class="col-md-2">
 							<a href="index.php" class="header-logo">
-								<img src="img/m6-logo-1.png" alt="<?php echo $this->getBasicVals('logo_alt_title','option_value'); ?>" title="<?php echo $this->getBasicVals('logo_alt_title','option_value2'); ?>" >
+								<img height="100%" width="100%" src="img/m6-logo-1.webp" alt="<?php echo $this->getBasicVals('logo_alt_title','option_value'); ?>" title="<?php echo $this->getBasicVals('logo_alt_title','option_value2'); ?>" >
 							</a>
 						</div>
 						<div class="col-md-3">
 							<!-- TrustBox widget - Micro Review Count --> 
 							<!-- TrustBox widget - Micro Review Count --> 
-							<!-- TrustBox widget - Review Collector --> <div  class="trustpilot-widget" data-locale="en-GB" data-template-id="5419b6a8b0d04a076446a9ad" data-businessunit-id="5df7a7d748a2590001008d19" data-style-height="30px" data-style-width="100%" data-theme="light"> <a href="https://uk.trustpilot.com/review/recyclepro.co.uk" target="_blank" rel="noopener">Trustpilot</a> </div> <!-- End TrustBox widget --> <!-- End TrustBox widget --> <!-- End TrustBox widget -->
+							<!-- TrustBox widget - Review Collector -->
+							 <!-- <div  class="trustpilot-widget" data-locale="en-GB" data-template-id="5419b6a8b0d04a076446a9ad" data-businessunit-id="5df7a7d748a2590001008d19" data-style-height="30px" data-style-width="100%" data-theme="light"> <a href="https://uk.trustpilot.com/review/recyclepro.co.uk" target="_blank" rel="noopener">Trustpilot</a> </div>  -->
+							 <!-- End TrustBox widget --> <!-- End TrustBox widget --> <!-- End TrustBox widget -->
 							<?php /*?><form action="#" class="header-searchbox">
 								<select class="select-searchcategory">
 									<option value="0">All categories</option>
@@ -143,37 +143,37 @@ function pageHead($pgname=''){
 							</form><?php */?>
 						</div>
 						<div class="col-md-2 dsktop">
-						<div class="header-contactinfo">
+						<div style="color:#13564f!important;" class="header-contactinfo">
 								<i class="fa fa-phone-square"></i>
 								<span style="font-weight:600;">Call:</span>
-								<b><a href="tel:<?php echo $this->getBasicVals('phone','option_value2'); ?>" class="text-green"><?php echo $this->getBasicVals('phone','option_value'); ?></a></b>
+								<b><a href="tel:<?php echo $this->getBasicVals('phone','option_value2'); ?>" style="color:#13564f!important;"><?php echo $this->getBasicVals('phone','option_value'); ?></a></b>
 							</div>
 						</div>
 						<div class="col-md-2 dsktop">
-						<div class="header-contactinfo">
+						<div style="color:#13564f!important;" class="header-contactinfo">
 								<i class="fa fa-envelope-square"></i>
 								<span style="font-weight:600;">Email:</span>
-								<b><a href="mailto:info@recyclepro.co.uk" class="text-green">info@recyclepro.co.uk</a></b>
+								<b><a href="mailto:info@recyclepro.co.uk" style="color:#13564f!important;">info@recyclepro.co.uk</a></b>
 							</div>
 						</div>
 						<div class="col-md-4 mobile">
-						<div class="header-contactinfo">
+						<div style="color:#13564f!important;" class="header-contactinfo">
 								<i class="fa fa-phone-square"></i>
 								<span style="font-weight:600;">Call :</span>
-								<b><a href="#" class="text-green"><?php echo $this->getBasicVals('phone','option_value'); ?></a></b>
+								<b><a href="#" style="color:#13564f!important;"><?php echo $this->getBasicVals('phone','option_value'); ?></a></b>
 							</div>
 						
-						<div class="header-contactinfo">
+						<div style="color:#13564f!important;" class="header-contactinfo">
 								<i class="fa fa-envelope-square"></i>
 								<span style="font-weight:600;">Email:</span>
-								<b><a href="mailto:info@recyclepro.co.uk" class="text-green">info@recyclepro.co.uk</a></b>
+								<b><a href="mailto:info@recyclepro.co.uk" style="color:#13564f!important;">info@recyclepro.co.uk</a></b>
 							</div>
 						</div>
 						<div class="col-md-2">
 							<div class="header-icons">
 								
 								<div class="header-cart zoom">
-									<a class="header-carticon" href="cart.php" onclick="window.location='cart.php'"><img src="images/cart.png" width="55px" height="55px" alt="cart"><span class="count"><?php echo count($_SESSION['products']); ?></span></a>
+									<a class="header-carticon" href="cart.php" onclick="window.location='cart.php'"><img src="images/cart.webp" width="55px" height="55px" alt="cart"><span class="count"><?php echo ($_SESSION['products']); ?></span></a>
 									<?php /*?><!-- Minicart -->
 									<div class="header-minicart minicart">
 										<div class="minicart-header">
@@ -216,15 +216,15 @@ function pageHead($pgname=''){
 					<table>
 							<tr>
 							    <td style="width:33%;">
-							 <a href="https://www.recyclepro.co.uk/"><img src="https://www.recyclepro.co.uk\images\footerlogo.png" alt="Trulli" width="130" height="130"> </a>  
+							 <a href=""><img src="images\footerlogo.webp" alt="Trulli" width="130" height="130"> </a>  
 						</td>
 						<td style="width:33%;">
-							 <a href="https://uk.trustpilot.com/review/recyclepro.co.uk?utm_medium=trustbox&utm_source=MicroReviewCount"><img  style="margin-top:4%;" src="https://www.recyclepro.co.uk\images\trustpilot-2.png" width="90" height="60" style="margin-bottom: 35px; margin-left:"> </a>  
+							 <a href="https://uk.trustpilot.com/review/recyclepro.co.uk?utm_medium=trustbox&utm_source=MicroReviewCount"><img  style="margin-top:4%;" src="images\trustpilot-2.webp" width="90" height="60" style="margin-bottom: 35px; margin-left:"> </a>  
 						</td>
 						
 							 <td style="width:33%;">  
-							 <a href="tel:<?php echo $this->getBasicVals('phone','option_value2'); ?>"><img  src="https://www.recyclepro.co.uk\images\Phone-icon-1.png" width="125" height="37"></a></a>
-							 <a href="mailto:info@recyclepro.co.uk"><img  src="https://www.recyclepro.co.uk\images\email-icon-1.png" width="125" height="37"></a>
+							 <a href="tel:<?php echo $this->getBasicVals('phone','option_value2'); ?>"><img  src="images\Phone-icon-1.webp" width="125" height="37"></a></a>
+							 <a href="mailto:info@recyclepro.co.uk"><img  src="images\email-icon-1.webp" width="125" height="37"></a>
 							 </td>
 							    </tr>
 						</table>	
@@ -297,7 +297,7 @@ function pageHead($pgname=''){
 										$record2 = $this->db->fetch_query($sql2,$this->db->pdo_open());
 										$subMenu = count($record2);
 									?>
-										<li class="<?php if($subMenu>0) echo 'dropdown-holder '; ?><?php if($_REQUEST['p']==$arr['slug']) echo 'active'; ?>">
+										<li class="<?php if($subMenu>0) echo 'dropdown-holder '; ?>">
 											<a href="brands.php?p=<?php echo str_replace(" ", " ", $arr['slug']); ?>"><?php echo str_replace(" ", " ", $arr['display_name']); ?></a>
 											<?php if($subMenu>0) { ?>
 											<ul class="hodropdown">
@@ -363,7 +363,9 @@ function pageHead($pgname=''){
 						</div>
 						
 						<div class="col-12 d-block d-lg-none">
-							<div class="mobile-menu clearfix"></div>
+							<div class="mobile-menu clearfix mean-container">
+							    
+							</div>
 						</div>
 					</div>
 				
@@ -382,37 +384,37 @@ function footer(){
 						
 						<div class="col-lg-3 col-md-6 col-sm-12">
 							<a href="index.php" class="header-logo">
-								<img style="width:200px;height:200px;" src="img/footerlogo.png" alt="<?php echo $this->getBasicVals('logo_alt_title','option_value'); ?>" title="<?php echo $this->getBasicVals('logo_alt_title','option_value2'); ?>" >
+								<img style="width:150px;height:150px;margin-top: 39px;margin-left: 50px;" src="img/footerlogo.webp" alt="<?php echo $this->getBasicVals('logo_alt_title','option_value'); ?>" title="<?php echo $this->getBasicVals('logo_alt_title','option_value2'); ?>" >
 							</a>
 							
 			
 						</div>
 						<div class="col-lg-3 col-md-6 col-sm-12">
 							<div class="footer-widget widget-links">
-								<h5 style="font-size:19px;color:white" class="footer-widget-title">Our Company</h5>
+								<h5 style="font-size:23px;color:white" class="footer-widget-title">Our Company</h5>
 								<ul>
-									<li  style="color:#17a697!important;"><i style="font-size:19px;" class=" fa fa-folder-open"></i><a style="color:white!important;margin-left:2%;" href="page.php?p=1&h=about-us">About us</a></li>
-									<li style="color:#17a697!important;margin-top:2%;"><i style="font-size:19px;" class="fa fa-file-word-o"></i><a style="color:white!important;margin-left:2%;" href="terms.php">Terms and Conditions</a></li>
-									<li style="color:#17a697!important;margin-top:2%;"><i style="font-size:19px;" class="fa fa-key"></i><a style="color:white!important;margin-left:2%;" href="privacy-policy.php">Privacy Policy</a></li>
-									<li style="color:#17a697!important;margin-top:2%;"><i style="font-size:19px;" class="fa fa-phone"></i><a style="color:white!important;margin-left:2%;" href="contact.php">Contact Us</a></li>
+									<li  style="color:#13564f!important;font-size:23px;"><i style="font-size:19px;" class=" fa fa-folder-open"></i><a style="color:white!important;margin-left:2%;" href="page.php?p=1&h=about-us">About us</a></li>
+									<li style="color:#13564f!important;margin-top:2%;font-size:23px;"><i style="font-size:19px;" class="fa fa-file-word-o"></i><a style="color:white!important;margin-left:2%;" href="terms.php">Terms and Conditions</a></li>
+									<li style="color:#13564f!important;margin-top:2%;font-size:23px;"><i style="font-size:19px;" class="fa fa-key"></i><a style="color:white!important;margin-left:2%;" href="privacy-policy.php">Privacy Policy</a></li>
+									<li style="color:#13564f!important;margin-top:2%;font-size:23px;"><i style="font-size:19px;" class="fa fa-phone"></i><a style="color:white!important;margin-left:2%;" href="contact.php">Contact Us</a></li>
 								</ul>
 							</div>
 						</div>
 						<div class="col-lg-3 col-md-6 col-sm-12">
 							<div class="footer-widget widget-links">
-								<h5 style="font-size:19px;color:white" class="footer-widget-title">Your Account</h5>
+								<h5 style="font-size:23px;color:white" class="footer-widget-title">Your Account</h5>
 								<ul>
-									<li style="color:#17a697!important;margin-top:2%;"><i style="font-size:19px;" class="fa fa-user"></i><a style="color:white!important;margin-left:2%;" href="myaccount.php"> My Account</a></li>
-									<li style="color:#17a697!important;margin-top:2%;"><i style="font-size:19px;" class="fa fa-shopping-cart"></i><a style="color:white!important;margin-left:2%;" href="cart.php"> Cart</a></li>
+									<li style="color:#13564f!important;margin-top:2%;font-size:23px;"><i style="font-size:19px;" class="fa fa-user"></i><a style="color:white!important;margin-left:2%;" href="myaccount.php"> My Account</a></li>
+									<li style="color:#13564f!important;margin-top:2%;font-size:23px;"><i style="font-size:19px;" class="fa fa-shopping-cart"></i><a style="color:white!important;margin-left:2%;" href="cart.php"> Cart</a></li>
 								</ul>
 							</div>
 						</div>
 						<div class="col-lg-3 col-md-6 col-sm-12">
 							<div class="footer-widget widget-links">
-								<h5 style="font-size:19px;color:white" class="footer-widget-title">Contact Info</h5>
+								<h5 style="font-size:23px;color:white" class="footer-widget-title">Contact Info</h5>
 								<ul>
-									<li style="color:white;margin-top:2%;font-weight:600;"><i style="font-size:19px;margin-right:2%;color:#17a697;" class="fa fa-envelope-square"></i>Email: <a href="mailto:<?php echo $this->getBasicVals('email','option_value2'); ?>">info@recyclepro.co.uk</a></li>
-									<li style="color:white;margin-top:2%;font-weight:600;"><i style="font-size:19px;margin-right:2%;color:#17a697;" class="fa fa-phone-square"></i>Call : <a href="tel:<?php echo $this->getBasicVals('phone','option_value2'); ?>"><?php echo $this->getBasicVals('phone','option_value'); ?></a></li>
+									<li style="color:white;margin-top:2%;font-weight:600;"><i style="font-size:19px;margin-right:2%;color:#13564f;" class="fa fa-envelope-square"></i>Email: <a href="mailto:<?php echo $this->getBasicVals('email','option_value2'); ?>">info@recyclepro.co.uk</a></li>
+									<li style="color:white;margin-top:2%;font-weight:600;"><i style="font-size:19px;margin-right:2%;color:#13564f;" class="fa fa-phone-square"></i>Call : <a href="tel:<?php echo $this->getBasicVals('phone','option_value2'); ?>"><?php echo $this->getBasicVals('phone','option_value'); ?></a></li>
 									
 									<?php /*?><li><i class="ion ion-ios-glode"></i> www.recyclepro.co.uk</li><?php */?>
 								</ul>
@@ -459,11 +461,8 @@ function NewsLetterArea(){
 			</div>
 			<div class="newsletter-socialicons socialicons socialicons-radial">
 				<ul>
-					<li><a href="https://www.facebook.com/Recycle-pro-102337717901297/"><i class="ion ion-logo-facebook"></i></a></li>
-					<li><a href="https://www.instagram.com/recycleprouk/"><i class="ion ion-logo-instagram"></i></a></li>
-					<li><a href="#"><i class="ion ion-logo-twitter"></i></a></li>
-					<li><a href="#"><i class="ion ion-logo-youtube"></i></a></li>
-					<li><a href="#"><i class="ion ion-logo-google"></i></a></li>
+					<li><a aria-label="Recycle Pro Facebook" href="https://www.facebook.com/Recycle-pro-102337717901297/" target="_blank"><i class="ion ion-logo-facebook"></i></a></li>
+					<li><a aria-label="Recylce Pro Instagram" href="https://www.instagram.com/recycleprouk/" target="_blank"><i class="ion ion-logo-instagram"></i></a></li>
 					
 				</ul>
 			</div>
