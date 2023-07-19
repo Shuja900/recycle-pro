@@ -1,4 +1,5 @@
 <?php 
+ini_set('display_errors', FALSE);
 // Front Website Layout Class contains all functions to manage front website layout functions. 
 class LayoutClass{
 function __construct(){
@@ -105,7 +106,7 @@ function pageHead($pgname=''){
 									<a style="color:white !important;" class="select-language-current" href="register.php">Register</a>
 								</div>
 								<div  class="select-language mob zoom">
-								<a class="header-carticon zoom" href="cart.php" onclick="window.location='cart.php'"><i class="lnr fa fa-cart-plus"></i><span class="count"><?php echo ($_SESSION['products']); ?></span></a>
+								<a class="header-carticon zoom" href="cart.php" onclick="window.location='cart.php'"><i class="lnr fa fa-cart-plus"></i><span class="count"><?php echo count($_SESSION['products']); ?></span></a>
 								</div>
 							</div>
 							<?php } ?>
@@ -173,7 +174,7 @@ function pageHead($pgname=''){
 							<div class="header-icons">
 								
 								<div class="header-cart zoom">
-									<a class="header-carticon" href="cart.php" onclick="window.location='cart.php'"><img src="images/cart.webp" width="55px" height="55px" alt="cart"><span class="count"><?php echo ($_SESSION['products']); ?></span></a>
+									<a class="header-carticon" href="cart.php" onclick="window.location='cart.php'"><img src="images/cart.webp" width="55px" height="55px" alt="cart"><span class="count"><?php echo count($_SESSION['products']); ?></span></a>
 									<?php /*?><!-- Minicart -->
 									<div class="header-minicart minicart">
 										<div class="minicart-header">

@@ -1,5 +1,5 @@
 <?php
-putenv('TMPDIR=/home/recycleproco/public_html/temp');
+//putenv('TMPDIR=/home/recycleproco/public_html/temp');
 
 require_once('wr-m6/apps/front/products/api-work/vendor/autoload.php');
 $session_id = $_SESSION['userid'];
